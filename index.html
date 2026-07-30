@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Cuadros personalizados en aluminio HD | SublimArts Chile</title>
+    <meta name="description" content="Cuadros personalizados en aluminio con impresión HD: anime y gamer, autos y motos, paisajes, religión, películas, deportes, animales y retratos. SublimArts en Talca, Chile.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="SublimArts">
+    <link rel="canonical" href="https://sublimarts.001webhospedaje.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:site_name" content="SublimArts">
+    <meta property="og:title" content="Cuadros personalizados en aluminio HD | SublimArts">
+    <meta property="og:description" content="Diseños personalizados y categorías para todos los estilos, impresos en aluminio con colores vibrantes.">
+    <meta property="og:url" content="https://sublimarts.001webhospedaje.com/">
+    <meta property="og:image" content="https://sublimarts.001webhospedaje.com/img/vistaescritorio.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#0d0d1a">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+    <!-- BOTÓN WHATSAPP -->
+    <a href="https://wa.me/56912345678?text=Hola%20SublimArts,%20quiero%20más%20información"
+       class="whatsapp-button"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- =============================================
+         HEADER
+         ============================================= -->
+    <header class="header-principal">
+        <div class="navegacion">
+            <div class="contenedor-navegacion">
+
+                <!-- Logo -->
+                <div class="logo-contenedor">
+                    <div class="logo" aria-hidden="true">🎨</div>
+                    <div class="titulo-logo">SublimArts</div>
+                </div>
+
+                <!-- Menú principal -->
+                <ul class="menu-principal" id="menuPrincipal" role="navigation" aria-label="Menú principal">
+                    <li><a href="index.html" class="enlace-menu">Inicio</a></li>
+                    <li class="menu-con-desplegable">
+                        <button class="enlace-menu-desplegable" aria-haspopup="true" aria-expanded="false" aria-controls="submenuCategorias">
+                            Categorías
+                            <i class="fas fa-chevron-down flecha-desplegable" aria-hidden="true"></i>
+                        </button>
+                        <ul class="submenu" id="submenuCategorias">
+                            <li><a href="categoria1.html">Anime y Gamer</a></li>
+                            <li><a href="autos-motos.html">Autos y Motos</a></li>
+                            <li><a href="paisajes-ciudades.html" data-pagina-futura="paisajes-ciudades.html">Paisajes y Ciudades</a></li>
+                            <li><a href="religion-espiritualidad.html" data-pagina-futura="religion-espiritualidad.html">Religión y Espiritualidad</a></li>
+                            <li><a href="peliculas-series.html" data-pagina-futura="peliculas-series.html">Películas y Series</a></li>
+                            <li><a href="deportes-animales.html">Deportes y Animales</a></li>
+                            <li><a href="retratos-personalizados.html" data-pagina-futura="retratos-personalizados.html">Retratos Personalizados</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#videos" class="enlace-menu">Videos</a></li>
+                    <li><a href="contacto.html" class="enlace-menu">Contacto</a></li>
+                </ul>
+
+                <!-- Iconos usuario -->
+                <div class="iconos-usuario">
+                    <a href="#" class="icono-usuario" aria-label="Lista de deseos">
+                        <i class="fas fa-heart" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="icono-usuario" aria-label="Carrito de compras">
+                        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="icono-usuario" aria-label="Mi cuenta">
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+                <!-- Botón hamburguesa -->
+                <button class="boton-menu-mobile"
+                        id="botonMenuMobile"
+                        aria-label="Abrir menú"
+                        aria-expanded="false"
+                        aria-controls="menuPrincipal">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay del menú -->
+    <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
+
+
+    <main id="contenido-principal">
+
+    <!-- =============================================
+         BANNER PRINCIPAL
+         ============================================= -->
+    <section class="banner-principal" id="inicio">
+        <div class="contenedor-banner">
+            <div class="contenido-banner">
+                <h1 class="titulo-banner">
+                    Cuadros en Aluminio <span style="color:#e94560">HD</span>
+                </h1>
+                <p class="texto-banner">
+                    Calidad de museo, colores vibrantes y durabilidad eterna.
+                    Transforma tus imágenes en obras de arte que durarán toda la vida.
+                </p>
+                <a href="#categorias" class="boton-banner">
+                    Explorar Colección <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="imagen-banner">
+                <!-- FIX: loading="lazy" en imágenes fuera del viewport inicial.
+                     El banner está above-the-fold → NO lazy (correcto dejarlo eager) -->
+                <img src="https://i.pinimg.com/736x/86/9b/c6/869bc6927e07c2910f0017eb31973b69.jpg"
+                     alt="Cuadro en aluminio HD de SublimArts"
+                     width="600"
+                     height="500">
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =============================================
+         SECCIÓN INFO
+         ============================================= -->
+    <section class="seccion-info">
+        <div class="contenedor-seccion">
+            <div class="info-grid">
+                <div class="info-contenido">
+                    <h3>✨ ¿Qué son los cuadros de aluminio?</h3>
+                    <p>Los cuadros de aluminio son una técnica de impresión de última generación donde la tinta se sublima directamente sobre una plancha de aluminio de alta calidad. El resultado es una obra de arte con colores vibrantes, nitidez Full HD y una durabilidad que supera cualquier otro material.</p>
+                    <ul class="info-lista">
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Colores más brillantes que el papel o lienzo</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Resistente a rayos UV, humedad y arañazos</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> No se deforma ni decolora con el tiempo</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Fácil limpieza: solo un paño húmedo</li>
+                    </ul>
+                </div>
+                <div class="info-imagen info-carrusel" id="infoCarrusel" aria-label="Galería de cuadros en aluminio">
+                    <div class="info-carrusel-pista">
+                        <figure class="info-slide activo">
+                            <img src="http://127.0.0.1:5501/img/autos%20y%20motos/ChatGPT%20Image%208%20abr%202026%2C%2010_47_30%20p.m..png"
+                                 alt="Detalle de calidad de cuadro en aluminio"
+                                 loading="lazy"
+                                 width="600"
+                                 height="450">
+                        </figure>
+                        <figure class="info-slide">
+                            <img src="http://127.0.0.1:5501/img/naruto/kakashi.jpeg"
+                                 alt="Cuadro de aluminio instalado en una sala de estar"
+                                 loading="lazy"
+                                 width="600"
+                                 height="450">
+                        </figure>
+                        <figure class="info-slide">
+                            <img src="http://127.0.0.1:5501/img/shelby.jpeg"
+                                 alt="Cuadro de aluminio instalado en una oficina"
+                                 loading="lazy"
+                                 width="600"
+                                 height="450">
+                        </figure>
+                        <figure class="info-slide">
+                            <img src="http://127.0.0.1:5501/img/cuadromuestra3.png"
+                                 alt="Cuadro de aluminio instalado en un dormitorio"
+                                 loading="lazy"
+                                 width="600"
+                                 height="450">
+                        </figure>
+                    </div>
+
+                    <button class="info-carrusel-flecha anterior" type="button" aria-label="Ver imagen anterior">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <button class="info-carrusel-flecha siguiente" type="button" aria-label="Ver imagen siguiente">
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="info-carrusel-indicadores" aria-label="Seleccionar imagen">
+                        <button class="info-indicador activo" type="button" aria-label="Ver imagen 1" aria-current="true"></button>
+                        <button class="info-indicador" type="button" aria-label="Ver imagen 2"></button>
+                        <button class="info-indicador" type="button" aria-label="Ver imagen 3"></button>
+                        <button class="info-indicador" type="button" aria-label="Ver imagen 4"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =============================================
+         SECCIÓN BENEFICIOS
+         ============================================= -->
+    <section class="seccion-beneficios">
+        <div class="contenedor-seccion">
+            <h2 class="titulo-seccion">Beneficios exclusivos</h2>
+            <p class="subtitulo-seccion">¿Por qué elegir SublimArts?</p>
+            <div class="beneficios-grid">
+                <div class="beneficio-item">
+                    <div class="beneficio-icono" aria-hidden="true"><i class="fas fa-gem"></i></div>
+                    <div class="beneficio-texto">
+                        <h4>Calidad de museo</h4>
+                        <p>Impresión directa sobre aluminio con tintas de alta gama.</p>
+                    </div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icono" aria-hidden="true"><i class="fas fa-sync-alt"></i></div>
+                    <div class="beneficio-texto">
+                        <h4>No se deforma</h4>
+                        <p>A diferencia del lienzo, el aluminio mantiene su forma perfecta.</p>
+                    </div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icono" aria-hidden="true"><i class="fas fa-water"></i></div>
+                    <div class="beneficio-texto">
+                        <h4>Resistente a la humedad</h4>
+                        <p>Ideal para baños, cocinas o exteriores cubiertos.</p>
+                    </div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icono" aria-hidden="true"><i class="fas fa-feather-alt"></i></div>
+                    <div class="beneficio-texto">
+                        <h4>Ultraligero</h4>
+                        <p>Fácil de colgar, no necesita marco pesado.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- FIX UX: indicador visual de scroll horizontal en mobile -->
+            <p class="scroll-hint" aria-hidden="true">
+                <i class="fas fa-hand-point-right"></i> Desliza para ver más
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =============================================
+         SECCIÓN CATEGORÍAS
+         ============================================= -->
+    <section class="seccion-categorias" id="categorias">
+        <div class="contenedor-seccion">
+            <h2 class="titulo-seccion">Explora por categorías</h2>
+            <p class="subtitulo-seccion">Haz clic en cualquier imagen para ver todos los cuadros de esa categoría</p>
+            <div class="categorias-grid">
+
+                <a href="categoria1.html" class="categoria-card" data-url="tematicas.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/736x/8f/3c/77/8f3c77f32b4a948e7fe6f04c96a6cf3f.jpg"
+                             alt="Cuadros temáticos"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Anime </h3>
+                </a>
+
+                <a href="autos-motos.html" class="categoria-card" data-url="retratos.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/736x/b8/6b/fc/b86bfc8cbfa40c7afd9827fd2abfea9e.jpg"
+                             alt="Retratos personalizados"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Autos y Motos</h3>
+                </a>
+
+                <a href="/paisajes-ciudades.html" class="categoria-card" data-url="paisajes.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/736x/b8/a0/aa/b8a0aaa387d28ca0d0b6edd9dda6ca9b.jpg"
+                             alt="Cuadros de paisajes"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Paisajes</h3>
+                </a>
+
+                <a href="deportes.html#deporte-popular" class="categoria-card" data-url="abstracto.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/736x/04/6a/a5/046aa53da9ce9f35835c65fee520f68b.jpg"
+                             alt="Arte abstracto"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Deportes</h3>
+                </a>
+
+                <a href="animales.html" class="categoria-card" data-url="animales.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/1200x/d8/df/11/d8df1112437e89c83165c2d675b9d8c5.jpg"
+                             alt="Cuadros de animales"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Animales</h3>
+                </a>
+
+                <a href="categorias.html#nc-marvel" class="categoria-card" data-url="ciudades.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/1200x/28/82/8c/28828cba6f634d91322d9986e2f198dd.jpg"
+                             alt="Cuadros de ciudades"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Peliculas y Series</h3>
+                </a>
+                
+                <a href="index.html#anime-popular" class="categoria-card" data-url="tematicas.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/1200x/3f/24/26/3f242682439a8d1e23f316d84d76efff.jpg"
+                             alt="Cuadros temáticos"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Gamer</h3>
+                </a>
+
+                <a href="categorias.html#nc-starwars" class="categoria-card" data-url="retratos.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/736x/b8/6b/fc/b86bfc8cbfa40c7afd9827fd2abfea9e.jpg"
+                             alt="Retratos personalizados"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Retratos Personalizados</h3>
+                </a>
+
+                <a href="categorias.html#nc-popular" class="categoria-card" data-url="paisajes.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/1200x/40/1f/ed/401fedd3c70d5da786e7ca358b6a7092.jpg"
+                             alt="Cuadros de paisajes"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Motos</h3>
+                </a>
+
+                <a href="abstracto.html" class="categoria-card" data-url="abstracto.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/736x/79/76/3f/79763f84c8476a5ac0aae0946a660f3d.jpg"
+                             alt="Arte abstracto"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Ciudades</h3>
+                </a>
+
+                <a href="religion-espiritualidad.html" class="categoria-card" data-url="animales.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/1200x/e4/f6/2c/e4f62ce0dcd5652d870cd8007b2b6e43.jpg"
+                             alt="Cuadros de animales"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Religion</h3>
+                </a>
+
+                <a href="paisajes-ciudades.html" class="categoria-card" data-url="ciudades.html">
+                    <div class="categoria-imagen">
+                        <img src="https://i.pinimg.com/736x/1c/c7/e7/1cc7e720d21d6f40227dee7503959522.jpg"
+                             alt="Cuadros de ciudades"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <h3>Ciudades</h3>
+                </a>
+                 
+            </div>
+        </div>
+    </section>
+    
+    
+   <!-- =============================================
+     SECCIÓN VIDEOS
+============================================= -->
+
+<section class="seccion-videos" id="videos">
+
+    <div class="contenedor-seccion">
+
+        <h2 class="titulo-seccion">
+            📹 Mira cómo se hacen
+        </h2>
+
+        <p class="subtitulo-seccion">
+            Descubre el proceso de sublimación y la calidad de nuestros cuadros
+        </p>
+
+        <div class="videos-grid">
+
+            <!-- VIDEO 1 -->
+
+            <article class="video-card">
+
+                <div class="video-container">
+
+                    <iframe
+                        src="https://www.youtube.com/embed/za5xoOvhcgs"
+                        title="Proceso de sublimación paso a paso"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+                <div class="video-info">
+
+                    <h3>✨ Proceso de sublimación paso a paso</h3>
+
+                    <p>
+                        Conoce cómo transformamos tus imágenes en obras de arte sobre aluminio.
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- VIDEO 2 -->
+
+            <article class="video-card">
+
+                <div class="video-container">
+
+                    <iframe
+                           src="https://www.youtube-nocookie.com/embed/VIDEO_ID_YOUTUBE_2"
+                           title="Calidad Full HD y colores vibrantes"
+                           loading="lazy"
+                           referrerpolicy="strict-origin-when-cross-origin"
+                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                           allowfullscreen></iframe>
+                </div>
+
+                <div class="video-info">
+
+                    <h3>🎨 Calidad Full HD y colores vibrantes</h3>
+
+                    <p>
+                        Mira la diferencia entre una impresión tradicional y una impresión en aluminio HD.
+                    </p>
+
+                </div>
+
+            </article>
+
+            <!-- VIDEO 3 -->
+
+            <article class="video-card">
+
+                <div class="video-container">
+
+                    <iframe
+                           src="https://www.youtube-nocookie.com/embed/VIDEO_ID_YOUTUBE_3"
+                           title="Cómo instalar tu cuadro de aluminio"
+                           loading="lazy"
+                           referrerpolicy="strict-origin-when-cross-origin"
+                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                           allowfullscreen></iframe>
+                </div>
+
+                <div class="video-info">
+
+                    <h3>🖼️ Cómo instalar tu cuadro</h3>
+
+                    <p>
+                        Aprende lo fácil que es instalar un cuadro de aluminio en cualquier muro.
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+        <p class="scroll-hint" aria-hidden="true">
+
+            <i class="fas fa-hand-point-right"></i>
+
+            Desliza para ver más
+
+        </p>
+
+    </div>
+
+</section>
+
+
+    <!-- =============================================
+         SECCIÓN CUADRO EN TU MURO
+         ============================================= -->
+    <section class="seccion-muro">
+        <div class="contenedor-seccion">
+            <h2 class="titulo-seccion">Un cuadro de aluminio en tu hogar</h2>
+            <p class="subtitulo-seccion">✨ Acabado mate premium · Marco flotante incluido · Brillo y nitidez incomparables</p>
+            <div class="muro-grid">
+
+                <div class="muro-item">
+                    <img src="img/WhatsApp Image 2026-06-15 at 00.08.42 (1).jpeg"
+                         alt="Cuadro de aluminio en sala de estar"
+                         loading="lazy"
+                         width="1000"
+                         height="667">
+                    <div class="muro-overlay">
+                        <p><i class="fas fa-home" aria-hidden="true"></i> Sala de Estar</p>
+                    </div>
+                </div>
+
+                <div class="muro-item">
+                    <img src="img/WhatsApp Image 2026-06-15 at 00.08.41.jpeg"
+                         alt="Cuadro de aluminio en oficina"
+                         loading="lazy"
+                         width="1000"
+                         height="667">
+                    <div class="muro-overlay">
+                        <p><i class="fas fa-briefcase" aria-hidden="true"></i> Oficina</p>
+                    </div>
+                </div>
+
+                <div class="muro-item">
+                    <img src="img/WhatsApp Image 2026-06-15 at 00.08.41 (3).jpeg"
+                         alt="Cuadro de aluminio en dormitorio"
+                         loading="lazy"
+                         width="1000"
+                         height="667">
+                    <div class="muro-overlay">
+                        <p><i class="fas fa-bed" aria-hidden="true"></i> Dormitorio</p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Scroll hint mobile -->
+            <p class="scroll-hint" aria-hidden="true">
+                <i class="fas fa-hand-point-right"></i> Desliza para ver más
+            </p>
+        </div>
+    </section>
+
+
+    </main>
+
+    <!-- =============================================
+         FOOTER
+         ============================================= -->
+    <footer class="footer-principal" id="contacto">
+        <div class="contenedor-footer">
+
+            <div class="columna-footer">
+                <div class="titulo-footer">SublimArts</div>
+                <p class="texto-footer">
+                    Cuadros en aluminio de alta calidad, con tecnología de sublimación
+                    que garantiza colores vibrantes y durabilidad eterna.
+                </p>
+                <div class="redes-sociales">
+                    <a href="#" class="enlace-red-social" aria-label="Instagram">
+                        <i class="fab fa-instagram" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="enlace-red-social" aria-label="Facebook">
+                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="enlace-red-social" aria-label="TikTok">
+                        <i class="fab fa-tiktok" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="columna-footer">
+                <h3 class="titulo-columna">Enlaces rápidos</h3>
+                <ul class="lista-enlaces">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#categorias">Categorías</a></li>
+                    <li><a href="#videos">Videos</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                </ul>
+            </div>
+
+            <div class="columna-footer">
+                <h3 class="titulo-columna">Categorías</h3>
+                <ul class="lista-enlaces">
+                    <li><a href="tematicas.html">Temáticos</a></li>
+                    <li><a href="retratos.html">Retratos</a></li>
+                    <li><a href="paisajes.html">Paisajes</a></li>
+                    <li><a href="abstracto.html">Abstracto</a></li>
+                </ul>
+            </div>
+
+            <div class="columna-footer">
+                <h3 class="titulo-columna">Contacto</h3>
+                <div class="info-contacto">
+                    <p><i class="fas fa-envelope" aria-hidden="true"></i> contacto@sublimarts.com</p>
+                    <p><i class="fas fa-phone" aria-hidden="true"></i> +56 9 1234 5678</p>
+                    <p>
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        <a href="https://wa.me/56982045756" rel="noopener noreferrer">+56 9 1234 5678</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <div class="pie-footer">
+            <p>&copy; 2026 SublimArts - Cuadros en Aluminio HD | Calidad que perdura</p>
+        </div>
+    </footer>
+
+
+    <!-- =============================================
+         JAVASCRIPT
+         ============================================= -->
+    <script src="script/index.js" defer></script>
+</body>
+</html>

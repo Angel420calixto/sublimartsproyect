@@ -1,0 +1,1777 @@
+/* =============================================
+   MANU.CSS — VERSIÓN FINAL CORREGIDA
+   SublimArts · Estilo gamer/anime premium
+   ============================================= */
+
+/* =============================================
+   VARIABLES CSS GLOBALES
+   ============================================= */
+:root {
+    --color-primario: #1a1a2e;
+    --color-secundario: #16213e;
+    --color-terciario: #0f3460;
+    --color-destacado: #e94560;
+    --color-whatsapp: #25D366;
+    --color-texto: #ffffff;
+    --color-texto-secundario: #b8b8d1;
+    --color-fondo: #0d0d1a;
+    --color-borde: #2a2a4a;
+    --color-submenu: #0f0f1f;
+    --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --sombra-destacada: 0 8px 24px rgba(233, 69, 96, 0.3);
+    --sombra-whatsapp: 0 4px 20px rgba(37, 211, 102, 0.4);
+    --transicion-rapida: all 0.3s ease;
+    --transicion-media: all 0.5s ease;
+}
+
+/* =============================================
+   RESET GLOBAL
+   FIX: Los dos bloques * se combinan en uno solo.
+   El -webkit-tap-highlight-color estaba al final del
+   archivo creando duplicidad innecesaria.
+   ============================================= */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.5;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+body.menu-abierto {
+    overflow: hidden;
+}
+
+/* =============================================
+   BOTÓN DE WHATSAPP FIJO
+   FIX: animation-play-state: paused en hover
+   evita el conflicto entre la animación pulse
+   y el transform de scale.
+   ============================================= */
+.whatsapp-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-whatsapp);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    z-index: 1000;
+    box-shadow: var(--sombra-whatsapp);
+    transition: var(--transicion-rapida);
+    animation: pulse 2s infinite;
+    text-decoration: none;
+}
+
+/* FIX: pausa la animación en hover para evitar
+   que transform: scale(1.05) del keyframe luche
+   con transform: scale(1.1) del hover */
+.whatsapp-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    animation-play-state: paused;
+}
+
+@keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* =============================================
+   ELEMENTOS BASE
+   ============================================= */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+/* =============================================
+   UTILIDADES
+   ============================================= */
+.contenedor-seccion {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.titulo-seccion {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-texto);
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+.titulo-seccion::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-destacado);
+    border-radius: 3px;
+}
+
+.subtitulo-seccion {
+    text-align: center;
+    color: var(--color-texto-secundario);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+.contenedor-boton-ver-mas {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-borde);
+}
+
+.boton-ver-mas {
+    background-color: var(--color-destacado);
+    color: var(--color-texto);
+    padding: 0.8rem 2.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transicion-rapida);
+    box-shadow: var(--sombra-suave);
+    border: none;
+    cursor: pointer;
+    min-width: 180px;
+    text-align: center;
+}
+
+.boton-ver-mas:hover {
+    background-color: #ff5773;
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-destacada);
+}
+
+/* =============================================
+   HEADER Y NAVEGACIÓN
+   ============================================= */
+.header-principal {
+    background-color: var(--color-primario);
+    position: sticky;
+    top: 0;
+    z-index: 10001;
+    box-shadow: var(--sombra-suave);
+}
+
+.navegacion {
+    padding: 1rem 0;
+}
+
+.contenedor-navegacion {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Logo */
+.logo-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.titulo-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--color-destacado), #ff7b9c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Menú desktop */
+.menu-principal {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    z-index: 10000;
+}
+
+.enlace-menu {
+    font-weight: 500;
+    font-size: 0.95rem;
+    position: relative;
+    transition: var(--transicion-rapida);
+    padding: 0.5rem 0;
+    color: var(--color-texto);
+}
+
+.enlace-menu:hover {
+    color: var(--color-destacado);
+}
+
+.enlace-menu::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-destacado);
+    transition: var(--transicion-rapida);
+}
+
+.enlace-menu:hover::after {
+    width: 100%;
+}
+
+/* Submenú desplegable — DESKTOP */
+.menu-con-desplegable {
+    position: relative;
+}
+
+.enlace-menu-desplegable {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    color: var(--color-texto);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    border: none;
+}
+
+.flecha-desplegable {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+    color: var(--color-texto);
+}
+
+.menu-con-desplegable:hover .flecha-desplegable {
+    transform: rotate(180deg);
+}
+
+.menu-con-desplegable:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Submenú base — DESKTOP */
+.submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--color-submenu);
+    min-width: 220px;
+    border-radius: 8px;
+    box-shadow: var(--sombra-suave);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transicion-rapida);
+    z-index: 100;
+    border-left: 3px solid var(--color-destacado);
+}
+
+.submenu li {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.submenu a {
+    display: block;
+    padding: 0.7rem 1.5rem;
+    color: var(--color-texto);
+    font-size: 0.9rem;
+    transition: var(--transicion-rapida);
+    white-space: nowrap;
+}
+
+.submenu a:hover {
+    color: var(--color-destacado);
+    background-color: rgba(233, 69, 96, 0.1);
+    padding-left: 2rem;
+}
+
+/* Iconos usuario */
+.iconos-usuario {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.icono-usuario {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transicion-rapida);
+    color: var(--color-texto);
+}
+
+.icono-usuario:hover {
+    color: var(--color-destacado);
+}
+
+/* Botón hamburguesa (solo visible en mobile) */
+.boton-menu-mobile {
+    display: none;
+    background: rgba(233, 69, 96, 0.1);
+    color: var(--color-texto);
+    font-size: 1.5rem;
+    z-index: 10003;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    /* 44x44px = touch target mínimo recomendado (WCAG) */
+}
+
+/* =============================================
+   OVERLAY MENÚ MÓVIL
+   ============================================= */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.activo {
+    display: block;
+    opacity: 1;
+}
+
+/* =============================================
+   IMÁGENES DE PRODUCTO
+   ============================================= */
+.imagen-producto,
+.grid-image {
+    user-select: none;
+    -webkit-user-drag: none;
+    /* pointer-events: none fue eliminado para permitir
+       que el modal se active al hacer click */
+}
+
+/* =============================================
+   BANNER PRINCIPAL
+   FIX: background-image: url() (URL vacía) generaba
+   petición inválida y sobrescribía los overrides de
+   página. Se cambia a 'none'; cada página que necesite
+   una imagen de fondo la define en su propio <style>.
+   ============================================= */
+.banner-principal {
+    background-image: none; /* FIX: era url() — vacío e inválido */
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.contenedor-banner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.contenido-banner {
+    flex: 1;
+    max-width: 600px;
+}
+
+.titulo-banner {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    color: var(--color-texto);
+}
+
+.texto-banner {
+    font-size: 1.1rem;
+    color: var(--color-texto-secundario);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.boton-banner {
+    display: inline-block;
+    background-color: var(--color-destacado);
+    color: var(--color-texto);
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: var(--transicion-rapida);
+    box-shadow: var(--sombra-suave);
+}
+
+.boton-banner:hover {
+    background-color: #ff5773;
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-destacada);
+}
+
+.imagen-banner {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-banner img {
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: var(--sombra-suave);
+}
+
+/* =============================================
+   SECCIÓN ANIME POPULAR
+   Los items 13+ se ocultan; manu.js añade
+   .expandido para mostrarlos con animación.
+   ============================================= */
+.seccion-popular {
+    padding: 4rem 0;
+    background-color: #000000;
+}
+
+.grid-popular {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+}
+
+.grid-popular .item-popular {
+    display: flex;
+}
+
+
+
+.item-popular {
+    background: transparent;
+    overflow: hidden;
+    transition: var(--transicion-media);
+    display: flex;
+    flex-direction: column;
+    height: 420px;
+    cursor: pointer;
+}
+
+.item-popular:hover {
+    transform: translateY(-8px);
+}
+
+.contenedor-imagen-popular {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.contenedor-imagen-popular img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.item-popular:hover .contenedor-imagen-popular img {
+    transform: scale(1.08);
+}
+
+/* Info de producto (compartida con .producto-item) */
+.info-producto {
+    padding: 16px 8px 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    flex: 1;
+}
+
+.titulo-producto {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.3;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dimension-producto {
+    font-size: 1rem;
+    color: #cccccc;
+    line-height: 1.3;
+    text-align: center;
+    width: 100%;
+}
+
+.precio-producto {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-destacado);
+    text-align: center;
+    width: 100%;
+}
+
+/* =============================================
+   SECCIÓN PRODUCTOS (galerías por franquicia)
+   ============================================= */
+.seccion-productos {
+    padding: 3rem 0;
+    background-color: #000000;
+}
+
+.galeria-productos {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+}
+
+.galeria-productos .producto-item {
+    display: flex;
+}
+
+
+
+.producto-item {
+    background: transparent;
+    overflow: hidden;
+    transition: var(--transicion-media);
+    display: flex;
+    flex-direction: column;
+    height: 420px;
+    cursor: pointer;
+}
+
+.producto-item:hover {
+    transform: translateY(-8px);
+}
+
+.contenedor-imagen-producto {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.contenedor-imagen-producto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.producto-item:hover .contenedor-imagen-producto img {
+    transform: scale(1.08);
+}
+
+/* Animación de aparición para items expandidos */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =============================================
+   MODAL PARA IMAGEN AMPLIADA
+   ============================================= */
+.modal-imagen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+}
+
+.modal-imagen.mostrar {
+    display: flex;
+}
+
+.modal-contenido {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cerrar-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #e94560;
+    color: white;
+    font-size: 24px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20002;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: var(--transicion-rapida);
+}
+
+.cerrar-modal:hover {
+    transform: scale(1.1);
+    background-color: #ff5773;
+}
+
+#imagen-ampliada {
+    max-width: 95vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.modal-imagen-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+/* FIX: se agrega background semi-transparente.
+   backdrop-filter solo produce blur visible cuando
+   el elemento tiene un fondo con transparencia parcial.
+   Sin background, el blur no se renderiza en ningún browser. */
+.modal-info {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 10, 26, 0.85); /* FIX: era solo backdrop-filter sin fondo */
+    padding: 15px 25px;
+    border-radius: 12px;
+    z-index: 20001;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Safari */
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(233, 69, 96, 0.2);
+    width: max-content;
+    max-width: 90vw;
+}
+
+.modal-info h3 {
+    font-size: 1.1rem;
+    color: white;
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-info p {
+    font-size: 0.95rem;
+    color: #cccccc;
+    margin: 0;
+    display: block;
+}
+
+.modal-botones {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.boton-ver,
+.boton-whatsapp-modal {
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 120px;
+    text-align: center;
+    border: none;
+    transition: var(--transicion-rapida);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.boton-ver {
+    background: #e94560;
+    color: white;
+}
+
+.boton-whatsapp-modal {
+    background: #25D366;
+    color: white;
+}
+
+.boton-ver:hover,
+.boton-whatsapp-modal:hover {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* =============================================
+   SECCIÓN GRID 3 IMÁGENES
+   ============================================= */
+.animetals-grid-section {
+    width: 100%;
+    background-color: var(--color-fondo);
+    padding: 40px 0;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.grid-images-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 30px;
+    width: 100%;
+}
+
+.three-images-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    height: 600px;
+    position: relative;
+    width: 100%;
+}
+
+/* Borde animado alrededor del grid */
+.three-images-grid::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border: 3px solid transparent;
+    background: linear-gradient(45deg,
+            var(--color-destacado),
+            #ff6b9d,
+            #8a2be2,
+            #00bfff,
+            var(--color-destacado)) border-box;
+    background-size: 300% 300%;
+    border-radius: 25px;
+    z-index: -1;
+    animation: anime-border 4s ease infinite;
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+}
+
+@keyframes anime-border {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.image-block {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.left-block {
+    clip-path: polygon(0 0, 85% 0, 100% 100%, 0% 100%);
+    border-radius: 15px 0 0 15px;
+    border-right: none;
+}
+
+.middle-block {
+    clip-path: polygon(15% 0, 85% 0, 100% 100%, 0% 100%);
+    position: relative;
+    z-index: 2;
+}
+
+.right-block {
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+    border-radius: 0 15px 15px 0;
+    border-left: none;
+}
+
+.image-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.grid-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.image-block:hover .grid-image {
+    transform: scale(1.05);
+}
+
+/* Efecto de brillo deslizante en hover */
+.image-block::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+    pointer-events: none;
+}
+
+.image-block:hover::after {
+    left: 100%;
+}
+
+/* =============================================
+   SECCIÓN PROCESO DE FABRICACIÓN
+   ============================================= */
+.seccion-proceso-fabricacion {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    margin: 40px 0;
+    border-radius: 20px;
+    border: 2px solid rgba(110, 69, 226, 0.5);
+    width: 100%;
+}
+
+.seccion-proceso-fabricacion .contenedor-seccion {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.proceso-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.proceso-paso {
+    text-align: center;
+    padding: 30px 20px;
+    background: rgba(20, 15, 45, 0.5);
+    border-radius: 15px;
+    border: 2px solid rgba(110, 69, 226, 0.3);
+    transition: all 0.3s ease;
+    /* FIX: se agrega background para que backdrop-filter tenga efecto */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.proceso-paso:hover {
+    transform: translateY(-10px);
+    border-color: #00f3ff;
+    box-shadow: 0 15px 30px rgba(0, 243, 255, 0.3);
+}
+
+.paso-icono {
+    position: relative;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.paso-icono i {
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, #00f3ff, #ff3864);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.paso-numero {
+    position: absolute;
+    top: -10px;
+    right: 50%;
+    transform: translateX(50%);
+    background: linear-gradient(135deg, #6e45e2, #ff3864);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+.proceso-paso h3 {
+    font-size: 1.3rem;
+    margin: 0 0 15px;
+    color: #00f3ff;
+}
+
+.proceso-paso p {
+    color: #d8d8f0;
+    line-height: 1.6;
+    margin: 0 0 15px;
+    flex: 1;
+}
+
+.paso-detalle {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.detalle-badge {
+    background: rgba(110, 69, 226, 0.2);
+    border: 1px solid #6e45e2;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: #d8d8f0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.detalle-badge i {
+    color: #00f3ff;
+}
+
+/* =============================================
+   SECCIÓN COMPARADOR DE MATERIALES
+   ============================================= */
+.seccion-materiales {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    margin: 40px 0;
+    border-radius: 20px;
+    border: 2px solid rgba(110, 69, 226, 0.5);
+}
+
+.seccion-materiales .contenedor-seccion {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.comparador-materiales {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.material-card {
+    background: rgba(20, 15, 45, 0.5);
+    border-radius: 15px;
+    padding: 30px 20px;
+    text-align: center;
+    border: 2px solid rgba(110, 69, 226, 0.3);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Card destacada: Metal */
+.material-card[data-material="metal"] {
+    border-color: #ffd700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+}
+
+/* Ribbon "Mejor elección" */
+.material-card[data-material="metal"]::before {
+    content: '★ MEJOR ELECCIÓN ★';
+    position: absolute;
+    top: 14px;
+    right: -28px;
+    background: #ffd700;
+    color: #333;
+    padding: 5px 40px;
+    transform: rotate(45deg);
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+    white-space: nowrap;
+    z-index: 2;
+}
+
+.material-card:hover {
+    transform: translateY(-10px);
+    border-color: #00f3ff;
+    box-shadow: 0 15px 30px rgba(0, 243, 255, 0.3);
+}
+
+/* Ícono base: gradiente de color para non-metal cards */
+.material-icono-grande {
+    margin-bottom: 15px;
+}
+
+.material-icono-grande i {
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, #00f3ff, #ff3864);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* FIX CRÍTICO: el ícono corona de la card Metal no se
+   mostraba porque heredaba background-clip: text y
+   color: transparent del selector general.
+   Se resetean AMBAS propiedades para que el color
+   dorado sea visible en todos los browsers. */
+.material-card[data-material="metal"] .material-icono-grande i {
+    color: #ffd700;                 /* FIX: color visible */
+    background: none;              /* FIX: elimina el gradiente */
+    -webkit-background-clip: initial; /* FIX: resetea clip para Safari */
+    background-clip: initial;         /* FIX: resetea clip para Chrome/FF */
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.material-card h3 {
+    font-size: 1.4rem;
+    margin: 0 0 20px;
+    color: #00f3ff;
+}
+
+.material-card[data-material="metal"] h3 {
+    color: #ffd700;
+}
+
+.material-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    flex: 1;
+}
+
+.material-lista li {
+    padding: 8px 0;
+    color: #d8d8f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.material-lista .fa-check-circle { color: #00ff88; }
+.material-lista .fa-times-circle  { color: #ff3864; }
+
+/* =============================================
+   FOOTER
+   ============================================= */
+.footer-principal {
+    background-color: var(--color-primario);
+    padding: 4rem 0 2rem;
+    border-top: 1px solid var(--color-borde);
+}
+
+.contenedor-footer {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+}
+
+.columna-footer {
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo-footer {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, var(--color-destacado), #ff7b9c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.texto-footer {
+    color: var(--color-texto-secundario);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.redes-sociales {
+    display: flex;
+    gap: 1rem;
+}
+
+.enlace-red-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-secundario);
+    border-radius: 50%;
+    transition: var(--transicion-rapida);
+    color: var(--color-texto);
+}
+
+.enlace-red-social:hover {
+    background-color: var(--color-destacado);
+    transform: translateY(-3px);
+}
+
+.titulo-columna {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--color-texto);
+}
+
+.lista-enlaces li {
+    margin-bottom: 0.8rem;
+}
+
+.lista-enlaces a {
+    color: var(--color-texto-secundario);
+    transition: var(--transicion-rapida);
+}
+
+.lista-enlaces a:hover {
+    color: var(--color-destacado);
+    padding-left: 5px;
+}
+
+.info-contacto p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-texto-secundario);
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.info-contacto a {
+    transition: var(--transicion-rapida);
+    color: var(--color-texto-secundario);
+}
+
+.info-contacto a:hover {
+    color: var(--color-destacado);
+}
+
+.pie-footer {
+    max-width: 1400px;
+    margin: 3rem auto 0;
+    padding: 1.5rem 20px 0;
+    border-top: 1px solid var(--color-borde);
+    text-align: center;
+    color: var(--color-texto-secundario);
+    font-size: 0.9rem;
+}
+
+/* =============================================
+   RESPONSIVE — 1200px (laptops pequeños)
+   ============================================= */
+@media (max-width: 1200px) {
+    .grid-popular,
+    .galeria-productos {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.2rem;
+    }
+
+    .item-popular,
+    .producto-item {
+        height: 400px;
+    }
+
+    .contenedor-imagen-popular,
+    .contenedor-imagen-producto {
+        height: 300px;
+    }
+
+    .three-images-grid {
+        height: 500px;
+    }
+
+    .grid-images-container {
+        max-width: 1400px;
+        padding: 0 25px;
+    }
+
+    /* FIX: footer en 2 columnas antes de llegar a mobile */
+    .contenedor-footer {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .proceso-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .comparador-materiales {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =============================================
+   RESPONSIVE — 992px (tablets landscape)
+   ============================================= */
+@media (max-width: 992px) {
+    .grid-popular,
+    .galeria-productos {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .item-popular,
+    .producto-item {
+        height: 380px;
+    }
+
+    .contenedor-imagen-popular,
+    .contenedor-imagen-producto {
+        height: 280px;
+    }
+
+    .titulo-producto {
+        font-size: 1.1rem;
+    }
+
+    .three-images-grid {
+        height: 400px;
+    }
+
+    .grid-images-container {
+        padding: 0 20px;
+    }
+}
+
+/* =============================================
+   RESPONSIVE — 768px (tablets portrait / mobile)
+   ============================================= */
+@media (max-width: 768px) {
+
+    /* --- MENÚ MOBILE --- */
+    .boton-menu-mobile {
+        display: flex;
+    }
+
+    .menu-principal {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 85%;
+        max-width: 350px;
+        height: 100vh;
+        background-color: var(--color-primario);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 80px 0 30px;
+        gap: 0;
+        z-index: 10000;
+        overflow-y: auto;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+        transition: right 0.3s ease;
+        display: flex;
+        margin: 0;
+    }
+
+    .menu-principal.activo {
+        right: 0;
+    }
+
+    .menu-principal > li {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        list-style: none;
+    }
+
+    .menu-principal > li:last-child {
+        border-bottom: none;
+    }
+
+    .enlace-menu {
+        display: block;
+        padding: 16px 20px;
+        font-size: 1rem;
+        color: #ffffff;
+        cursor: pointer;
+        text-align: left;
+        font-weight: 500;
+    }
+
+    .menu-con-desplegable {
+        width: 100%;
+        position: relative;
+    }
+
+    .enlace-menu-desplegable {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 1rem;
+        background: transparent;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        font-weight: 500;
+    }
+
+    .flecha-desplegable {
+        transition: transform 0.3s ease;
+        font-size: 0.8rem;
+        color: #ffffff;
+    }
+
+    /* La flecha gira al activar la clase .activo (vía JS) */
+    .menu-con-desplegable.activo .flecha-desplegable {
+        transform: rotate(180deg);
+    }
+
+    /* SUBMENÚ MOBILE — CORREGIDO
+       FIX CRÍTICO: el submenú desktop tiene opacity:0 y
+       visibility:hidden. En mobile, se deben resetear
+       explícitamente o el submenú nunca será visible
+       aunque se añada la clase .activo con max-height.
+       El error original: solo se cambiaba max-height,
+       dejando el elemento invisible por opacity/visibility. */
+    .submenu {
+        position: relative;
+        top: auto;
+        left: auto;
+        background-color: var(--color-submenu);
+        padding: 0;
+        margin: 0;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 1;              /* FIX: anula desktop opacity:0 */
+        visibility: visible;     /* FIX: anula desktop visibility:hidden */
+        transform: none;         /* FIX: anula desktop translateY(10px) */
+        transition: max-height 0.4s ease;
+        width: 100%;
+        min-width: unset;
+        border-radius: 0;
+        border-left: 4px solid var(--color-destacado);
+        box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .menu-con-desplegable.activo .submenu {
+        max-height: 400px;
+        padding: 8px 0;
+    }
+
+    .submenu li {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        list-style: none;
+    }
+
+    .submenu li:last-child {
+        border-bottom: none;
+    }
+
+    .submenu a {
+        display: block;
+        padding: 12px 20px 12px 35px;
+        font-size: 0.95rem;
+        color: #ffffff;
+        transition: all 0.2s ease;
+        width: 100%;
+        text-align: left;
+        font-weight: 400;
+        background-color: transparent;
+        position: relative;
+        line-height: 1.4;
+        white-space: normal;
+    }
+
+    .submenu a:hover,
+    .submenu a:active {
+        color: var(--color-destacado);
+        background-color: rgba(233, 69, 96, 0.2);
+        padding-left: 40px;
+    }
+
+    /* Chevron decorativo en cada ítem del submenú */
+    .submenu a::before {
+        content: '▹';
+        position: absolute;
+        left: 15px;
+        color: var(--color-destacado);
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .iconos-usuario {
+        display: none;
+    }
+
+    /* --- BANNER --- */
+    .contenedor-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .titulo-banner {
+        font-size: 2rem;
+    }
+
+    /* --- GRIDS PRODUCTOS --- */
+    .grid-popular,
+    .galeria-productos {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .item-popular,
+    .producto-item {
+        height: 340px;
+    }
+
+    .contenedor-imagen-popular,
+    .contenedor-imagen-producto {
+        height: 240px;
+    }
+
+    .titulo-producto { font-size: 1rem; }
+    .dimension-producto,
+    .precio-producto { font-size: 0.9rem; }
+
+    .info-producto {
+        padding: 12px 6px 6px;
+    }
+
+    /* --- GRID 3 IMÁGENES --- */
+    .animetals-grid-section {
+        padding: 20px 0;
+        margin: 20px 0;
+    }
+
+    .three-images-grid {
+        height: 350px;
+    }
+
+    .grid-images-container {
+        padding: 0 10px;
+    }
+
+    .left-block   { clip-path: polygon(0 0, 75% 0, 100% 100%, 0% 100%); }
+    .middle-block { clip-path: polygon(25% 0, 75% 0, 100% 100%, 0% 100%); }
+    .right-block  { clip-path: polygon(25% 0, 100% 0, 100% 100%, 0% 100%); }
+
+    .three-images-grid::before {
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        border-width: 2px;
+        border-radius: 15px;
+    }
+
+    /* --- PROCESO Y MATERIALES --- */
+    .proceso-grid,
+    .comparador-materiales {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* --- FOOTER --- */
+    .contenedor-footer {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    /* --- MODAL --- */
+    .modal-info {
+        bottom: 20px;
+        padding: 12px 20px;
+        flex-direction: column;
+        gap: 10px;
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .modal-info h3 {
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .modal-info p {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    .modal-botones {
+        width: 100%;
+    }
+
+    .boton-ver,
+    .boton-whatsapp-modal {
+        min-width: 100px;
+        padding: 6px 12px;
+        font-size: 0.75rem;
+        flex: 1;
+    }
+}
+
+/* =============================================
+   RESPONSIVE — 480px (móviles pequeños)
+   ============================================= */
+@media (max-width: 480px) {
+    .titulo-banner   { font-size: 1.6rem; }
+    .texto-banner    { font-size: 1rem; }
+
+    .imagen-banner img { max-height: 300px; }
+
+    .grid-popular,
+    .galeria-productos {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+
+    .item-popular,
+    .producto-item {
+        height: 300px;
+    }
+
+    .contenedor-imagen-popular,
+    .contenedor-imagen-producto {
+        height: 200px;
+    }
+
+    .titulo-producto   { font-size: 0.95rem; }
+    .dimension-producto,
+    .precio-producto   { font-size: 0.85rem; }
+    .info-producto     { padding: 8px 4px 4px; }
+
+    .three-images-grid { height: 280px; }
+    .menu-principal    { width: 90%; }
+    .titulo-seccion    { font-size: 1.4rem; }
+
+    .modal-info {
+        padding: 10px 15px;
+    }
+
+    .modal-info h3 { font-size: 0.8rem; }
+}
+
+/* =============================================
+   OVERRIDES DE ESPECIFICIDAD PARA SECCIONES
+   Estos !important neutralizan herencia de sombras
+   y bordes en items de galería (diseño sin card frame).
+   ============================================= */
+.seccion-popular .item-popular,
+.seccion-popular .contenedor-imagen-popular,
+.seccion-popular .info-producto,
+.seccion-productos .producto-item,
+.seccion-productos .contenedor-imagen-producto,
+.seccion-productos .info-producto {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+.seccion-popular,
+.seccion-productos {
+    background-color: #000000 !important;
+}
+
+.seccion-popular .info-producto *,
+.seccion-productos .info-producto * {
+    text-align: center;
+}
+
+/* =============================================
+   MEJORAS DE GALERÍAS Y SUBMENÚ MÓVIL
+   ============================================= */
+.producto-oculto {
+    display: none !important;
+}
+
+.imagen-producto {
+    cursor: zoom-in;
+}
+
+.submenu-grupo {
+    padding: 0.65rem 1.25rem 0.35rem;
+    color: var(--color-destacado);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+    .header-principal {
+        z-index: 30000;
+    }
+
+    .menu-overlay {
+        z-index: 29990;
+    }
+
+    .menu-principal {
+        z-index: 30001;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .boton-menu-mobile {
+        z-index: 30002;
+    }
+
+    .menu-con-desplegable.activo > .submenu,
+    .submenu.activo {
+        max-height: 75vh;
+        overflow-y: auto;
+        padding: 8px 0;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .menu-con-desplegable.activo .flecha-desplegable,
+    .enlace-menu-desplegable.activo .flecha-desplegable {
+        transform: rotate(180deg);
+    }
+
+    .submenu-grupo {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: var(--color-submenu);
+        padding-left: 35px;
+    }
+}
+
+
+/* Etiquetas para separar visualmente Religión y Espiritualidad */
+.etiqueta-categoria {
+    color: var(--color-destacado);
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.65rem;
+}
