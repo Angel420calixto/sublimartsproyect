@@ -28,7 +28,9 @@
           "-webkit-overflow-scrolling",
           "overscroll-behavior",
           "overscroll-behavior: contain",
-          "backdrop-filter"
+          "backdrop-filter",
+          "-webkit-user-drag",
+          "user-select"
         ]
       }
     ]

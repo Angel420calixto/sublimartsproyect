@@ -10,7 +10,6 @@
             --color-texto: #ffffff;
             --color-texto-secundario: #b8b8d1;
             --color-fondo: #0d0d1a;
-            --color-borde: #2a2a4a;
             --color-submenu: #0f0f1f;
             --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.3);
             --sombra-destacada: 0 8px 24px rgba(233, 69, 96, 0.3);
@@ -343,10 +342,9 @@
            BANNER PRINCIPAL
            ============================================= */
         .banner-principal {
-            background-image: url('ChatGPT Image 11 mar 2026, 02_12_48 a.m..png');
+            background-image: url('ChatGPT\ Image\ 5\ ago\ 2026\,\ 12_06_02\ a.m..png');
             padding: 4rem 0;
             position: relative;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
         }
         .contenedor-banner {
             max-width: 1400px;
