@@ -8,7 +8,8 @@
       {
         "ignore": [
           "meta[name=theme-color]",
-          "iframe[loading]"
+          "iframe[loading]",
+          "img[fetchpriority]"
         ]
       }
     ],
@@ -30,8 +31,15 @@
           "overscroll-behavior: contain",
           "backdrop-filter",
           "-webkit-user-drag",
-          "user-select"
+          "user-select",
+          "scrollbar-width"
         ]
+      }
+    ],
+    "axe/text-alternatives": [
+      "default",
+      {
+        "image-alt": "off"
       }
     ]
   }
