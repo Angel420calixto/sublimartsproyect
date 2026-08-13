@@ -32,7 +32,9 @@
           "backdrop-filter",
           "-webkit-user-drag",
           "user-select",
-          "scrollbar-width"
+          "scrollbar-width",
+          "scrollbar-width: none",
+          "overflow-x: clip"
         ]
       }
     ],

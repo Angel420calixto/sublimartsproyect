@@ -114,7 +114,8 @@
     </a>
 
     <!-- =============================================
-         HEADER
+         HEADER (sin cambios de lógica: mismo menú,
+         mismo submenú, mismo botón mobile)
          ============================================= -->
     <header class="header-principal">
         <div class="navegacion">
@@ -173,21 +174,45 @@
     <main id="contenido-principal">
 
         <!-- =============================================
-             BANNER PRINCIPAL — una sola imagen horizontal
-             a todo el ancho, estilo portada de Facebook.
-             Reemplaza el src por tu imagen horizontal
-             (recomendado: mínimo 1600x500px).
+             1. HERO / PORTADA
+             Carrusel de imágenes de fondo (tipo Metaleks):
+             las fotos rotan automáticamente con fundido
+             suave, el texto/CTA queda fijo encima. Agrega
+             o quita <div class="hero-slide"> según cuántas
+             fotos quieras rotar; el JS (HeroCarrusel) se
+             adapta solo a la cantidad de slides que haya.
+             Reemplaza el src de cada <img> por tu foto.
              ============================================= -->
-        <section class="banner-principal" id="inicio">
-            <div class="banner-imagen-contenedor">
-                <img src="ChatGPT Image 11 mar 2026, 02_12_48 a.m..png"
-                     alt="Cuadros en aluminio HD de SublimArts"
-                     class="banner-imagen"
-                     width="1600"
-                     height="500"
-                     loading="eager"
-                     fetchpriority="high">
-                <div class="banner-overlay" aria-hidden="true"></div>
+        <section class="banner-principal hero-carrusel" id="inicio" aria-roledescription="carrusel" aria-label="Portada SublimArts">
+            <div class="hero-slides" id="heroSlides">
+                <div class="hero-slide activo">
+                    <img src="ChatGPT Image 11 mar 2026, 02_12_48 a.m..png"
+                         alt="Cuadros en aluminio HD de SublimArts"
+                         class="banner-imagen"
+                         width="1600"
+                         height="500"
+                         loading="eager"
+                         fetchpriority="high">
+                    <div class="banner-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="hero-slide">
+                    <img src="https://img.staticdj.com/5ae96c04b95b842e2a28bd1bc6c3621d.webp"
+                         alt="Cuadro en aluminio HD — ambiente 2"
+                         class="banner-imagen"
+                         width="1600"
+                         height="500"
+                         loading="lazy">
+                    <div class="banner-overlay" aria-hidden="true"></div>
+                </div>
+                <div class="hero-slide">
+                    <img src="https://img.staticdj.com/72b77f6941f705043299461bdba0d130.webp"
+                         alt="Cuadro en aluminio HD — ambiente 3"
+                         class="banner-imagen"
+                         width="1600"
+                         height="500"
+                         loading="lazy">
+                    <div class="banner-overlay" aria-hidden="true"></div>
+                </div>
             </div>
 
             <div class="banner-contenido">
@@ -204,37 +229,36 @@
                     </a>
                 </div>
             </div>
+
+            <div class="hero-indicadores" id="heroIndicadores">
+                <button class="hero-indicador activo" type="button" aria-label="Imagen 1 de portada"></button>
+                <button class="hero-indicador" type="button" aria-label="Imagen 2 de portada"></button>
+                <button class="hero-indicador" type="button" aria-label="Imagen 3 de portada"></button>
+            </div>
         </section>
 
         <!-- =============================================
-             SECCIÓN INFO - CARRUSEL
+             2. ¿QUÉ ES UNA IMPRESIÓN EN METAL?
+             (antes "seccion-info": mismo carrusel de
+             imágenes, mismo componente CarruselInfo,
+             texto reescrito para esta nueva narrativa)
              ============================================= -->
-        <section class="seccion-info" id="info">
+        <section class="seccion-que-es" id="que-es">
             <div class="contenedor-seccion">
                 <div class="info-grid">
-                    <div class="info-contenido">
-                        <h2>✨ ¿Qué son los cuadros de aluminio?</h2>
-                        <p>Los cuadros de aluminio son una técnica de impresión de última generación donde la tinta se sublima directamente sobre una plancha de aluminio de alta calidad.</p>
-                        <ul class="info-lista">
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> Colores más brillantes que el papel o lienzo</li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> Resistente a rayos UV, humedad y arañazos</li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> No se deforma ni decolora con el tiempo</li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> Fácil limpieza: solo un paño húmedo</li>
-                        </ul>
-                    </div>
-                    <div class="info-imagen info-carrusel" id="infoCarrusel" aria-label="Galería de cuadros" tabindex="0">
+                    <div class="info-imagen info-carrusel reveal" id="infoCarrusel" aria-label="Galería de cuadros" tabindex="0">
                         <div class="info-carrusel-pista">
                             <figure class="info-slide activo">
-                                <img src="https://scontent.fscl13-1.fna.fbcdn.net/v/t39.30808-6/762903647_122125711569207747_8710643725869592405_n.jpg" alt="Detalle de cuadro en aluminio" loading="lazy" width="600" height="450">
+                                <img src="https://scontent.fscl38-1.fna.fbcdn.net/v/t39.30808-6/763847788_122126447745207747_6056750299802978879_n.jpg?stp=dst-jpg_tt6&cstp=mx1086x1448&ctp=s1086x1448&_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFVCeAsckEQegR5vGExVpTY7RulKzX0cwftG6UrNfRzB3xhhuXbvj-rxCIEgw9PfjIF9QvmkUPAVjhlTpeuD77w&_nc_ohc=DuvdEkGk2mcQ7kNvwFMLKQT&_nc_oc=AdpkncBfbRH4sPvBJJAgeFnpDix07vdJYxiIyihop3R8tj02heX9Xl15MIbe_JVusQM&_nc_zt=23&_nc_ht=scontent.fscl38-1.fna&_nc_gid=BbBQ2iZQnpPaXk1E-74yzw&_nc_ss=7b2a8&oh=00_AQHblSXZdoNQJ_qCcj_Rr3W37K48cxLMUdgs71KI4ASAnA&oe=6A7B5056" alt="Detalle de cuadro en aluminio" loading="lazy" width="600" height="450">
                             </figure>
                             <figure class="info-slide">
-                                <img src="https://scontent.fscl13-2.fna.fbcdn.net/v/t39.30808-6/759410999_122125711893207747_7128578885237472991_n.jpg" alt="Cuadro en sala de estar" loading="lazy" width="600" height="450">
+                                <img src="https://scontent.fscl38-1.fna.fbcdn.net/v/t39.30808-6/759881139_122125711941207747_1169484053798282724_n.jpg?stp=dst-jpg_tt6&cstp=mx1024x1536&ctp=s1024x1536&_nc_cat=101&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeESmstLX9wbR3JjRYeg6Ohdou3ZvvUoTami7dm-9ShNqZ1u1O0tV0GTiXgYyBA_0e72R2oCopaer5k5_9dvTzzM&_nc_ohc=tn5MDFiwZ40Q7kNvwHNDSZ4&_nc_oc=AdrvCcp4S0nAbXEfBKznodDRRFR7SKU_hLqrKcYt77zurbwkMpHxQYfP-_j863ajap4&_nc_zt=23&_nc_ht=scontent.fscl38-1.fna&_nc_gid=Ub-j6x65macYdZgHhVYKJA&_nc_ss=7b2a8&oh=00_AQFBPC1mD1FSIfYB7S60Wel_REBoyH8a74RQI022q4OXUg&oe=6A7B51CD" alt="Cuadro en sala de estar" loading="lazy" width="600" height="450">
                             </figure>
                             <figure class="info-slide">
-                                <img src="https://angel420calixto.github.io/proyecto-sublimacion/img/jujutsukaisen/satoru%20extension.jpeg" alt="Cuadro de anime Satoru Gojo" loading="lazy" width="600" height="450">
+                                <img src="https://scontent.fscl38-1.fna.fbcdn.net/v/t39.30808-6/759835425_122125703115207747_9129068180261325087_n.jpg?stp=dst-jpg_tt6&cstp=mx1086x1448&ctp=s1086x1448&_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGOuVgf1nBkfYB8VqVHE-dPBtPZrF0bg_UG09msXRuD9XZ_QOP0AcXLqmiamJ9-DSaYW9wEc-pmZuNiXhTgAAHE&_nc_ohc=Vgvxn9OAdh8Q7kNvwGY4b0g&_nc_oc=AdrBnXC3KW9OpAUqWwXBfTTEYBUuRUfA2OL0wDYtL70Tkr87nIf1aDIOBq5RtOOUEr8&_nc_zt=23&_nc_ht=scontent.fscl38-1.fna&_nc_gid=OTo8HiNZ_jMVHfUNtKAjTA&_nc_ss=7b2a8&oh=00_AQHeawBw1pFh4vBLzbJ2tHUhzPnhxDvYbqNikC7N_PvzoA&oe=6A7B6798" alt="Cuadro de anime Satoru Gojo" loading="lazy" width="600" height="450">
                             </figure>
                             <figure class="info-slide">
-                                <img src="https://scontent.fscl13-1.fna.fbcdn.net/v/t39.30808-6/760444355_122125701453207747_6003097225469113985_n.jpg" alt="Cuadro en dormitorio" loading="lazy" width="600" height="450">
+                                <img src="https://scontent.fscl38-1.fna.fbcdn.net/v/t39.30808-6/759986810_122125701573207747_4806437840517417342_n.jpg?stp=dst-jpg_tt6&cstp=mx1086x1448&ctp=s1086x1448&_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG-6KphcuT0ZcoLdk2ZCQDPDniV-tfkv-8OeJX61-S_79tb0tVH0CDVei5hQanmwotWylQ_q6RAMd-ksAPn53Iz&_nc_ohc=lcmSulQ97R8Q7kNvwGbnk0S&_nc_oc=AdojdZVsdSku6voGyeJnpjRw9kvyniBkcIKgQ1T_J_P9__d8Zu1Ov3DbccBXdEk0A88&_nc_zt=23&_nc_ht=scontent.fscl38-1.fna&_nc_gid=AAp0sgHjcOdvmrPqEAAbLg&_nc_ss=7b2a8&oh=00_AQH26GGkd_6yt_SXeKa74xC_97QrkyU8rWrXaOBejarrjg&oe=6A7B69E7" alt="Cuadro en dormitorio" loading="lazy" width="600" height="450">
                             </figure>
                         </div>
                         <button class="info-carrusel-flecha anterior" type="button" aria-label="Imagen anterior">
@@ -250,256 +274,303 @@
                             <button class="info-indicador" type="button" aria-label="Imagen 4"></button>
                         </div>
                     </div>
+                    <div class="info-contenido reveal">
+                        <span class="eyebrow">Sublimación sobre aluminio</span>
+                        <h2>¿Qué es una impresión en metal?</h2>
+                        <p>Tomamos tu foto, ilustración o diseño y lo fusionamos a nivel molecular con una plancha de aluminio mediante calor y presión. El resultado no es una imagen pegada sobre metal: es la imagen convertida en metal.</p>
+                        <ul class="info-lista">
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> Colores más brillantes que el papel o lienzo</li>
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> Resistente a rayos UV, humedad y arañazos</li>
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> No se deforma ni decolora con el tiempo</li>
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> Fácil limpieza: solo un paño húmedo</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- =============================================
-             SECCIÓN BENEFICIOS - CARRUSEL DE VIDEOS
+             3. IMPRESIÓN HD EN ALUMINIO VS CUADRO TRADICIONAL
+             Nueva sección. Desktop: dos columnas lado a
+             lado. Mobile: scroll horizontal con snap
+             (sin flechas, dos tarjetas para comparar).
              ============================================= -->
-        <section class="seccion-beneficios" id="beneficios">
+        <section class="seccion-comparacion" id="comparacion">
             <div class="contenedor-seccion">
-                <h2 class="titulo-seccion">Beneficios exclusivos en video</h2>
-                <p class="subtitulo-seccion">Descubre por qué nuestros cuadros son únicos</p>
+                <h2 class="titulo-seccion reveal">Aluminio HD vs. cuadro tradicional</h2>
+                <p class="subtitulo-seccion reveal">La misma imagen, dos resultados completamente distintos</p>
 
-                <div class="carrusel-contenedor" id="beneficiosCarrusel" aria-label="Videos de beneficios">
-                    <button class="carrusel-flecha carrusel-flecha-anterior" type="button" aria-label="Video anterior">
-                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                    </button>
+                <div class="comparacion-pista">
+                    <article class="comparacion-columna reveal">
+                        <img src="https://scontent.fscl38-1.fna.fbcdn.net/v/t39.30808-6/762903647_122125711569207747_8710643725869592405_n.jpg?stp=dst-jpg_tt6&cstp=mx1024x1536&ctp=s1024x1536&_nc_cat=108&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEr0ilGvGwnUadEjcblVCuj89-Xaivk5i_z35dqK-TmL8xMhrLyaL3qRFc1z9l3_1nQJLXc_JLTCuR8GfX_RI6C&_nc_ohc=vdb4_yWjtBIQ7kNvwGE78aT&_nc_oc=AdoVHWPYiUX2pn0qt_tV-ZMZ1M0diYCkrnWgocJFHwdZfmF6hdZgzJN9fXhRq85iuAI&_nc_zt=23&_nc_ht=scontent.fscl38-1.fna&_nc_gid=cXhIPMja7-Uf-N-Xjm4WQQ&_nc_ss=7b2a8&oh=00_AQEpsjo8GpJ14FSd2ZA0WHSoqluST9bQcXiLHsg5ANgigA&oe=6A836B3A"
+                             alt="Cuadro tradicional en lienzo con marco"
+                             class="comparacion-imagen"
+                             loading="lazy"
+                             width="600"
+                             height="450">
+                        <h3>Cuadro tradicional</h3>
+                        <ul class="comparacion-lista">
+                            <li><i class="fas fa-times" aria-hidden="true"></i> Colores opacos con el tiempo</li>
+                            <li><i class="fas fa-times" aria-hidden="true"></i> Se humedece, se dobla o se decolora</li>
+                            <li><i class="fas fa-times" aria-hidden="true"></i> Requiere marco y vidrio adicional</li>
+                            <li><i class="fas fa-times" aria-hidden="true"></i> Difícil de limpiar sin dañarlo</li>
+                        </ul>
+                    </article>
 
-                    <div class="carrusel-vista">
-                        <div class="carrusel-pista" id="beneficiosPista">
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/za5xoOvhcgs" title="Proceso de sublimación profesional" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                </div>
-                                <div class="video-info">
-                                    <h3>Proceso de sublimación</h3>
-                                    <p>Técnica profesional para máxima calidad</p>
-                                </div>
-                            </article>
+                    <div class="comparacion-vs" aria-hidden="true">VS</div>
 
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/xtb7TspmMFo" title="Durabilidad y resistencia" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                </div>
-                                <div class="video-info">
-                                    <h3>Durabilidad extrema</h3>
-                                    <p>Resiste golpes, humedad y rayos UV</p>
-                                </div>
-                            </article>
+                    <article class="comparacion-columna comparacion-destacada reveal">
+                        <img src="https://img.staticdj.com/9072e660aa3ef09dac89c14533b54c4e_820x.jpg"
+                             alt="Cuadro SublimArts en aluminio HD"
+                             class="comparacion-imagen comparacion-imagen-destacada"
+                             loading="lazy"
+                             width="600"
+                             height="450">
+                        <h3>SublimArts <span class="texto-destacado">HD</span></h3>
+                        <ul class="comparacion-lista comparacion-lista-check">
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Colores intensos y negros profundos</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Resistente al agua, UV y arañazos</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Sin marco: sistema flotante incluido</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Se limpia con un paño húmedo</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/qlqRMdkfrEU" title="Colores vibrantes Full HD" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <!-- =============================================
+             4. CALIDAD SUBLIMARTS
+             (equivalente a "Metaleks-S.HD", con nombre e
+             identidad propios de SublimArts)
+             ============================================= -->
+        <section class="seccion-calidad" id="calidad">
+            <div class="contenedor-seccion">
+                <div class="calidad-grid">
+                    <div class="calidad-imagen reveal">
+                        <img src="https://scontent.fscl38-1.fna.fbcdn.net/v/t39.30808-6/759881141_122125703937207747_502237452515736417_n.jpg?stp=dst-jpg_tt6&cstp=mx1122x1402&ctp=s1122x1402&_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFaGZ5Yyoo4U2blFBPs75G6CqvO4fPiZ9QKq87h8-Jn1F-VL4MzbcUcwOFGRP7lE3x6bMBNw_SKeQY9l9nCAeu7&_nc_ohc=2jehoUTgsCQQ7kNvwF1Jhcx&_nc_oc=AdoL-kjgxHS5O-nolYL-zlvKgOTBfMZ5FZbd0E018xak2Q8t2DIuPJWR-KQaISWl8Hw&_nc_zt=23&_nc_ht=scontent.fscl38-1.fna&_nc_gid=nJtmaopKVMa7MkN4iiAV4Q&_nc_ss=7b2a8&oh=00_AQEbb-4FJ_SKW1EdrIn8tsMjm3BKH29RzRH1_mAhKQsfXQ&oe=6A83538E"
+                             alt="Detalle macro del acabado de impresión en aluminio SublimArts"
+                             class="calidad-foto"
+                             loading="lazy"
+                             width="700"
+                             height="560">
+                    </div>
+                    <div class="calidad-contenido reveal">
+                        <span class="eyebrow">Tecnología de sublimación SublimArts</span>
+                        <h2>Calidad que se nota al mirarla de cerca</h2>
+                        <p>Nuestro proceso de sublimación imprime a alta resolución directamente sobre el aluminio, logrando una profundidad de color y un nivel de detalle que el papel simplemente no puede alcanzar.</p>
+                        <div class="calidad-caracteristicas">
+                            <div class="calidad-item">
+                                <i class="fas fa-palette" aria-hidden="true"></i>
+                                <div>
+                                    <h4>Colores intensos</h4>
+                                    <p>Gama de color amplia y saturada, fiel a la imagen original.</p>
                                 </div>
-                                <div class="video-info">
-                                    <h3>Colores vibrantes</h3>
-                                    <p>Nitidez Full HD que dura para siempre</p>
+                            </div>
+                            <div class="calidad-item">
+                                <i class="fas fa-moon" aria-hidden="true"></i>
+                                <div>
+                                    <h4>Negros profundos</h4>
+                                    <p>Contraste real, sin el efecto "lavado" del papel fotográfico.</p>
                                 </div>
-                            </article>
-
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/za5xoOvhcgs" title="Fácil instalación" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                            <div class="calidad-item">
+                                <i class="fas fa-gem" aria-hidden="true"></i>
+                                <div>
+                                    <h4>Acabado premium</h4>
+                                    <p>Superficie de aluminio con efecto brillante y sensación de calidad museo.</p>
                                 </div>
-                                <div class="video-info">
-                                    <h3>Fácil instalación</h3>
-                                    <p>Sistema de montaje incluido</p>
+                            </div>
+                            <div class="calidad-item">
+                                <i class="fas fa-feather" aria-hidden="true"></i>
+                                <div>
+                                    <h4>Ligero y resistente</h4>
+                                    <p>Mucho más liviano que el vidrio o el lienzo enmarcado, y más duradero.</p>
                                 </div>
-                            </article>
-
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/xtb7TspmMFo" title="Comparativa de materiales" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                </div>
-                                <div class="video-info">
-                                    <h3>Comparativa real</h3>
-                                    <p>Aluminio vs lienzo tradicional</p>
-                                </div>
-                            </article>
-
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/qlqRMdkfrEU" title="Clientes satisfechos" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                </div>
-                                <div class="video-info">
-                                    <h3>Testimonios reales</h3>
-                                    <p>Lo que dicen nuestros clientes</p>
-                                </div>
-                            </article>
+                            </div>
                         </div>
                     </div>
-
-                    <button class="carrusel-flecha carrusel-flecha-siguiente" type="button" aria-label="Video siguiente">
-                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                    </button>
                 </div>
             </div>
         </section>
 
         <!-- =============================================
-             SECCIÓN CATEGORÍAS
+             5. PROCESO — 3 PASOS
+             Desktop: fila horizontal con conectores.
+             Mobile: scroll-snap horizontal (swipe).
+             ============================================= -->
+        <section class="seccion-proceso" id="proceso">
+            <div class="contenedor-seccion">
+                <h2 class="titulo-seccion reveal">Así creamos tu cuadro</h2>
+                <p class="subtitulo-seccion reveal">Tres pasos, del pedido a la pared</p>
+
+                <div class="proceso-pista">
+                    <article class="paso-item reveal">
+                        <span class="paso-numero">01</span>
+                        <h3>Elige</h3>
+                        <p>Elige una categoría, una imagen propia o cuéntanos tu idea.</p>
+                    </article>
+                    <div class="paso-conector" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+                    <article class="paso-item reveal">
+                        <span class="paso-numero">02</span>
+                        <h3>Personaliza</h3>
+                        <p>Adaptamos tu diseño, ajustamos tamaño y preparamos tu cuadro.</p>
+                    </article>
+                    <div class="paso-conector" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+                    <article class="paso-item reveal">
+                        <span class="paso-numero">03</span>
+                        <h3>Creamos</h3>
+                        <p>Fabricamos tu cuadro en aluminio HD y coordinamos la entrega.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             6. PERSONALIZA TU CUADRO
+             Tarjetas con imágenes reales del proyecto.
+             Mobile: scroll-snap horizontal (swipe).
+             ============================================= -->
+        <section class="seccion-personaliza" id="personaliza">
+            <div class="contenedor-seccion">
+                <h2 class="titulo-seccion reveal">Personaliza tu cuadro</h2>
+                <p class="subtitulo-seccion reveal">Envíanos lo que quieras convertir en aluminio HD</p>
+
+                <div class="personaliza-pista">
+                    <article class="personaliza-card reveal">
+                        <img src="https://i.pinimg.com/1200x/d8/df/11/d8df1112437e89c83165c2d675b9d8c5.jpg" alt="Personalización con fotos de mascotas" loading="lazy" width="500" height="500">
+                        <div class="personaliza-texto">
+                            <h3>Mascotas</h3>
+                            <p>Esa foto de tu mascota que amas, en aluminio HD.</p>
+                        </div>
+                    </article>
+                    <article class="personaliza-card reveal">
+                        <img src="https://scontent.fscl38-1.fna.fbcdn.net/v/t39.30808-6/759835425_122125703115207747_9129068180261325087_n.jpg?stp=dst-jpg_tt6&cstp=mx1086x1448&ctp=s1086x1448&_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGOuVgf1nBkfYB8VqVHE-dPBtPZrF0bg_UG09msXRuD9XZ_QOP0AcXLqmiamJ9-DSaYW9wEc-pmZuNiXhTgAAHE&_nc_ohc=Vgvxn9OAdh8Q7kNvwGY4b0g&_nc_oc=AdrBnXC3KW9OpAUqWwXBfTTEYBUuRUfA2OL0wDYtL70Tkr87nIf1aDIOBq5RtOOUEr8&_nc_zt=23&_nc_ht=scontent.fscl38-1.fna&_nc_gid=OTo8HiNZ_jMVHfUNtKAjTA&_nc_ss=7b2a8&oh=00_AQHeawBw1pFh4vBLzbJ2tHUhzPnhxDvYbqNikC7N_PvzoA&oe=6A7B6798" alt="Personalización estilo anime" loading="lazy" width="500" height="500">
+                        <div class="personaliza-texto">
+                            <h3>Anime</h3>
+                            <p>Tu personaje favorito, con colores vibrantes y nitidez total.</p>
+                        </div>
+                    </article>
+                    <article class="personaliza-card reveal">
+                        <img src="https://i.pinimg.com/736x/b8/6b/fc/b86bfc8cbfa40c7afd9827fd2abfea9e.jpg" alt="Personalización con fotos familiares" loading="lazy" width="500" height="500">
+                        <div class="personaliza-texto">
+                            <h3>Fotos familiares</h3>
+                            <p>Recuerdos que merecen algo más que un marco común.</p>
+                        </div>
+                    </article>
+                    <article class="personaliza-card reveal">
+                        <img src="https://i.pinimg.com/736x/b8/a0/aa/b8a0aaa387d28ca0d0b6edd9dda6ca9b.jpg" alt="Personalización con paisajes e ilustraciones" loading="lazy" width="500" height="500">
+                        <div class="personaliza-texto">
+                            <h3>Ilustraciones y diseños</h3>
+                            <p>Arte digital, dibujos o diseños propios, listos para la pared.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="personaliza-cta reveal">
+                    <a href="https://wa.me/56912345678?text=Hola%20SublimArts,%20quiero%20personalizar%20mi%20cuadro" class="boton-banner" target="_blank" rel="noopener noreferrer">
+                        Quiero personalizar mi cuadro <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             7. CATEGORÍAS SUBLIMARTS
+             Antes era un grid vertical de 12 tarjetas.
+             Ahora es una "ventana" horizontal de 4
+             categorías con flechas (desktop) y swipe
+             (mobile), usando el mismo motor Carrusel.
+             Las 10 categorías/12 tarjetas actuales se
+             mantienen exactamente igual.
              ============================================= -->
         <section class="seccion-categorias" id="categorias">
             <div class="contenedor-seccion">
-                <h2 class="titulo-seccion">Explora por categorías</h2>
-                <p class="subtitulo-seccion">Haz clic en cualquier imagen para ver todos los cuadros</p>
-                <div class="categorias-grid">
-                    <a href="categoria1.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/736x/8f/3c/77/8f3c77f32b4a948e7fe6f04c96a6cf3f.jpg" alt="Anime" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Anime</h3>
-                    </a>
-                    <a href="autos-motos.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/736x/b8/6b/fc/b86bfc8cbfa40c7afd9827fd2abfea9e.jpg" alt="Autos y Motos" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Autos y Motos</h3>
-                    </a>
-                    <a href="paisajes-ciudades.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/736x/b8/a0/aa/b8a0aaa387d28ca0d0b6edd9dda6ca9b.jpg" alt="Paisajes" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Paisajes</h3>
-                    </a>
-                    <a href="deportes-animales.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/736x/04/6a/a5/046aa53da9ce9f35835c65fee520f68b.jpg" alt="Deportes" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Deportes</h3>
-                    </a>
-                    <a href="deportes-animales.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/1200x/d8/df/11/d8df1112437e89c83165c2d675b9d8c5.jpg" alt="Animales" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Animales</h3>
-                    </a>
-                    <a href="peliculas-series.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/1200x/28/82/8c/28828cba6f634d91322d9986e2f198dd.jpg" alt="Películas y Series" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Películas y Series</h3>
-                    </a>
-                    <a href="categoria1.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/1200x/3f/24/26/3f242682439a8d1e23f316d84d76efff.jpg" alt="Gamer" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Gamer</h3>
-                    </a>
-                    <a href="retratos-personalizados.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/736x/b8/6b/fc/b86bfc8cbfa40c7afd9827fd2abfea9e.jpg" alt="Retratos" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Retratos</h3>
-                    </a>
-                    <a href="autos-motos.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/1200x/40/1f/ed/401fedd3c70d5da786e7ca358b6a7092.jpg" alt="Motos" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Motos</h3>
-                    </a>
-                    <a href="paisajes-ciudades.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/736x/79/76/3f/79763f84c8476a5ac0aae0946a660f3d.jpg" alt="Ciudades" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Ciudades</h3>
-                    </a>
-                    <a href="religion-espiritualidad.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/1200x/e4/f6/2c/e4f62ce0dcd5652d870cd8007b2b6e43.jpg" alt="Religión" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Religión</h3>
-                    </a>
-                    <a href="paisajes-ciudades.html" class="categoria-card">
-                        <div class="categoria-imagen">
-                            <img src="https://i.pinimg.com/736x/1c/c7/e7/1cc7e720d21d6f40227dee7503959522.jpg" alt="Paisajes Urbanos" loading="lazy" width="800" height="600">
-                        </div>
-                        <h3>Paisajes Urbanos</h3>
-                    </a>
-                </div>
-            </div>
-        </section>
+                <h2 class="titulo-seccion reveal">Explora por categorías</h2>
+                <p class="subtitulo-seccion reveal">Desliza o usa las flechas para descubrir todas las categorías</p>
 
-        <!-- =============================================
-             SECCIÓN VIDEOS - CARRUSEL
-             ============================================= -->
-        <section class="seccion-videos" id="videos">
-            <div class="contenedor-seccion">
-                <h2 class="titulo-seccion">📹 Mira cómo se hacen</h2>
-                <p class="subtitulo-seccion">Descubre el proceso de sublimación y la calidad de nuestros cuadros</p>
-
-                <div class="carrusel-contenedor" id="videosCarrusel" aria-label="Videos del proceso">
-                    <button class="carrusel-flecha carrusel-flecha-anterior" type="button" aria-label="Video anterior">
+                <div class="carrusel-contenedor" id="categoriasCarrusel" aria-label="Categorías de SublimArts">
+                    <button class="carrusel-flecha carrusel-flecha-anterior" type="button" aria-label="Categoría anterior">
                         <i class="fas fa-chevron-left" aria-hidden="true"></i>
                     </button>
 
                     <div class="carrusel-vista">
-                        <div class="carrusel-pista" id="videosPista">
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/za5xoOvhcgs" title="Proceso de sublimación" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <div class="carrusel-pista categorias-pista" id="categoriasPista">
+                            <a href="categoria1.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/736x/8f/3c/77/8f3c77f32b4a948e7fe6f04c96a6cf3f.jpg" alt="Anime" loading="lazy" width="800" height="600">
                                 </div>
-                                <div class="video-info">
-                                    <h3>✨ Proceso de sublimación</h3>
-                                    <p>Conoce cómo transformamos tus imágenes en obras de arte.</p>
+                                <h3>Anime</h3>
+                            </a>
+                            <a href="autos-motos.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/736x/b8/6b/fc/b86bfc8cbfa40c7afd9827fd2abfea9e.jpg" alt="Autos y Motos" loading="lazy" width="800" height="600">
                                 </div>
-                            </article>
-
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/xtb7TspmMFo" title="Calidad Full HD" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <h3>Autos y Motos</h3>
+                            </a>
+                            <a href="paisajes-ciudades.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/736x/b8/a0/aa/b8a0aaa387d28ca0d0b6edd9dda6ca9b.jpg" alt="Paisajes" loading="lazy" width="800" height="600">
                                 </div>
-                                <div class="video-info">
-                                    <h3>🎨 Calidad Full HD</h3>
-                                    <p>Mira la diferencia entre impresión tradicional y aluminio HD.</p>
+                                <h3>Paisajes</h3>
+                            </a>
+                            <a href="deportes-animales.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/736x/04/6a/a5/046aa53da9ce9f35835c65fee520f68b.jpg" alt="Deportes" loading="lazy" width="800" height="600">
                                 </div>
-                            </article>
-
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/qlqRMdkfrEU" title="Acabados premium" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <h3>Deportes</h3>
+                            </a>
+                            <a href="deportes-animales.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/1200x/d8/df/11/d8df1112437e89c83165c2d675b9d8c5.jpg" alt="Animales" loading="lazy" width="800" height="600">
                                 </div>
-                                <div class="video-info">
-                                    <h3>🖼️ Acabados premium</h3>
-                                    <p>Detalles que marcan la diferencia en cada cuadro.</p>
+                                <h3>Animales</h3>
+                            </a>
+                            <a href="peliculas-series.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/1200x/28/82/8c/28828cba6f634d91322d9986e2f198dd.jpg" alt="Películas y Series" loading="lazy" width="800" height="600">
                                 </div>
-                            </article>
-
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/za5xoOvhcgs" title="Instalación y cuidados" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <h3>Películas y Series</h3>
+                            </a>
+                            <a href="categoria1.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/1200x/3f/24/26/3f242682439a8d1e23f316d84d76efff.jpg" alt="Gamer" loading="lazy" width="800" height="600">
                                 </div>
-                                <div class="video-info">
-                                    <h3>🔧 Instalación fácil</h3>
-                                    <p>Sistema de montaje incluido para colgar en minutos.</p>
+                                <h3>Gamer</h3>
+                            </a>
+                            <a href="retratos-personalizados.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/736x/b8/6b/fc/b86bfc8cbfa40c7afd9827fd2abfea9e.jpg" alt="Retratos" loading="lazy" width="800" height="600">
                                 </div>
-                            </article>
-
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/xtb7TspmMFo" title="Resistencia y durabilidad" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <h3>Retratos</h3>
+                            </a>
+                            <a href="autos-motos.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/1200x/40/1f/ed/401fedd3c70d5da786e7ca358b6a7092.jpg" alt="Motos" loading="lazy" width="800" height="600">
                                 </div>
-                                <div class="video-info">
-                                    <h3>💪 Resistencia total</h3>
-                                    <p>Contra agua, rayos UV y el paso del tiempo.</p>
+                                <h3>Motos</h3>
+                            </a>
+                            <a href="paisajes-ciudades.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/736x/79/76/3f/79763f84c8476a5ac0aae0946a660f3d.jpg" alt="Ciudades" loading="lazy" width="800" height="600">
                                 </div>
-                            </article>
-
-                            <article class="carrusel-slide">
-                                <div class="video-wrapper">
-                                    <iframe src="https://www.youtube.com/embed/qlqRMdkfrEU" title="Clientes felices" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <h3>Ciudades</h3>
+                            </a>
+                            <a href="religion-espiritualidad.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/1200x/e4/f6/2c/e4f62ce0dcd5652d870cd8007b2b6e43.jpg" alt="Religión" loading="lazy" width="800" height="600">
                                 </div>
-                                <div class="video-info">
-                                    <h3>😍 Clientes felices</h3>
-                                    <p>Resultados reales en hogares de todo Chile.</p>
+                                <h3>Religión</h3>
+                            </a>
+                            <a href="paisajes-ciudades.html" class="categoria-card">
+                                <div class="categoria-imagen">
+                                    <img src="https://i.pinimg.com/736x/1c/c7/e7/1cc7e720d21d6f40227dee7503959522.jpg" alt="Paisajes Urbanos" loading="lazy" width="800" height="600">
                                 </div>
-                            </article>
+                                <h3>Paisajes Urbanos</h3>
+                            </a>
                         </div>
                     </div>
 
-                    <button class="carrusel-flecha carrusel-flecha-siguiente" type="button" aria-label="Video siguiente">
+                    <button class="carrusel-flecha carrusel-flecha-siguiente" type="button" aria-label="Categoría siguiente">
                         <i class="fas fa-chevron-right" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -507,12 +578,14 @@
         </section>
 
         <!-- =============================================
-             SECCIÓN CUADRO EN TU MURO - CARRUSEL
+             8. UN CUADRO EN TU MURO
+             (sin cambios: ya funcionaba como la galería
+             de ambientes horizontal que pide el brief)
              ============================================= -->
         <section class="seccion-muro" id="muro">
             <div class="contenedor-seccion">
-                <h2 class="titulo-seccion">Un cuadro de aluminio en tu hogar</h2>
-                <p class="subtitulo-seccion">✨ Acabado mate premium · Marco flotante incluido · Brillo y nitidez incomparables</p>
+                <h2 class="titulo-seccion reveal">Un cuadro de aluminio en tu hogar</h2>
+                <p class="subtitulo-seccion reveal">✨ Acabado mate premium · Marco flotante incluido · Brillo y nitidez incomparables</p>
 
                 <div class="carrusel-contenedor" id="muroCarrusel" aria-label="Galería de ambientes">
                     <button class="carrusel-flecha carrusel-flecha-anterior" type="button" aria-label="Ambiente anterior">
@@ -522,25 +595,25 @@
                     <div class="carrusel-vista">
                         <div class="carrusel-pista" id="muroPista">
                             <div class="muro-item">
-                                <img src="https://scontent.fscl20-1.fna.fbcdn.net/v/t39.30808-6/763847788_122126447745207747_6056750299802978879_n.jpg" alt="Cuadro en sala de estar" loading="lazy" width="1000" height="667">
+                                <img src="https://img.staticdj.com/75c4235ba84a62bd203cc39472bd63bb_2056x.jpg" alt="Cuadro en sala de estar" loading="lazy" width="1000" height="667">
                                 <div class="muro-overlay">
                                     <p><i class="fas fa-home" aria-hidden="true"></i> Sala de Estar</p>
                                 </div>
                             </div>
                             <div class="muro-item">
-                                <img src="img/oficina-cuadro.jpg" alt="Cuadro en oficina" loading="lazy" width="1000" height="667">
+                                <img src="https://scontent.fscl38-1.fna.fbcdn.net/v/t39.30808-6/763847788_122126447745207747_6056750299802978879_n.jpg?stp=dst-jpg_tt6&cstp=mx1086x1448&ctp=s1086x1448&_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFVCeAsckEQegR5vGExVpTY7RulKzX0cwftG6UrNfRzB3xhhuXbvj-rxCIEgw9PfjIF9QvmkUPAVjhlTpeuD77w&_nc_ohc=DuvdEkGk2mcQ7kNvwFMLKQT&_nc_oc=AdpkncBfbRH4sPvBJJAgeFnpDix07vdJYxiIyihop3R8tj02heX9Xl15MIbe_JVusQM&_nc_zt=23&_nc_ht=scontent.fscl38-1.fna&_nc_gid=polKPGRYl33mP0SyRm22AQ&_nc_ss=7b2a8&oh=00_AQEreZU9HcDTFVoOMfl_v4txhIW21SwHTvv3FhRUXxUWQw&oe=6A7B5056" loading="lazy" width="1000" height="667">
                                 <div class="muro-overlay">
                                     <p><i class="fas fa-briefcase" aria-hidden="true"></i> Oficina</p>
                                 </div>
                             </div>
                             <div class="muro-item">
-                                <img src="img/dormitorio-cuadro.jpg" alt="Cuadro en dormitorio" loading="lazy" width="1000" height="667">
+                                <img src="https://img.staticdj.com/3703be0060607ed132f7543658c19254.jpg" alt="Cuadro en dormitorio" loading="lazy" width="1000" height="667">
                                 <div class="muro-overlay">
                                     <p><i class="fas fa-bed" aria-hidden="true"></i> Dormitorio</p>
                                 </div>
                             </div>
                             <div class="muro-item">
-                                <img src="img/cocina-cuadro.jpg" alt="Cuadro en cocina" loading="lazy" width="1000" height="667">
+                                <img src="https://img.staticdj.com/9072e660aa3ef09dac89c14533b54c4e_820x.jpg" alt="Cuadro en cocina" loading="lazy" width="1000" height="667">
                                 <div class="muro-overlay">
                                     <p><i class="fas fa-utensils" aria-hidden="true"></i> Cocina</p>
                                 </div>
@@ -556,12 +629,99 @@
         </section>
 
         <!-- =============================================
-             SECCIÓN PREGUNTAS FRECUENTES
+             9. COLECCIONES / PRODUCTOS DESTACADOS
+             Nota temporal: reutiliza imágenes y nombres
+             de las categorías existentes como "colección
+             destacada" mientras se define el catálogo de
+             productos con medida y precio (a reemplazar
+             por productos reales cuando estén definidos).
+             ============================================= -->
+        <section class="seccion-destacados" id="destacados">
+            <div class="contenedor-seccion">
+                <h2 class="titulo-seccion reveal">Colecciones destacadas</h2>
+                <p class="subtitulo-seccion reveal">Las categorías más pedidas por nuestros clientes</p>
+
+                <div class="carrusel-contenedor" id="destacadosCarrusel" aria-label="Colecciones destacadas">
+                    <button class="carrusel-flecha carrusel-flecha-anterior" type="button" aria-label="Colección anterior">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="carrusel-vista">
+                        <div class="carrusel-pista" id="destacadosPista">
+                            <article class="destacado-card">
+                                <a href="categoria1.html">
+                                    <img src="https://i.pinimg.com/736x/8f/3c/77/8f3c77f32b4a948e7fe6f04c96a6cf3f.jpg" alt="Colección Anime" loading="lazy" width="700" height="700">
+                                    <div class="destacado-texto">
+                                        <h3>Colección Anime</h3>
+                                        <span class="destacado-cta">Ver colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                    </div>
+                                </a>
+                            </article>
+                            <article class="destacado-card">
+                                <a href="autos-motos.html">
+                                    <img src="https://i.pinimg.com/736x/b8/6b/fc/b86bfc8cbfa40c7afd9827fd2abfea9e.jpg" alt="Colección Autos y Motos" loading="lazy" width="700" height="700">
+                                    <div class="destacado-texto">
+                                        <h3>Autos y Motos</h3>
+                                        <span class="destacado-cta">Ver colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                    </div>
+                                </a>
+                            </article>
+                            <article class="destacado-card">
+                                <a href="paisajes-ciudades.html">
+                                    <img src="https://i.pinimg.com/736x/b8/a0/aa/b8a0aaa387d28ca0d0b6edd9dda6ca9b.jpg" alt="Colección Paisajes" loading="lazy" width="700" height="700">
+                                    <div class="destacado-texto">
+                                        <h3>Paisajes</h3>
+                                        <span class="destacado-cta">Ver colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                    </div>
+                                </a>
+                            </article>
+                            <article class="destacado-card">
+                                <a href="deportes-animales.html">
+                                    <img src="https://i.pinimg.com/1200x/d8/df/11/d8df1112437e89c83165c2d675b9d8c5.jpg" alt="Colección Animales" loading="lazy" width="700" height="700">
+                                    <div class="destacado-texto">
+                                        <h3>Animales</h3>
+                                        <span class="destacado-cta">Ver colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                    </div>
+                                </a>
+                            </article>
+                            <article class="destacado-card">
+                                <a href="peliculas-series.html">
+                                    <img src="https://i.pinimg.com/1200x/28/82/8c/28828cba6f634d91322d9986e2f198dd.jpg" alt="Colección Películas y Series" loading="lazy" width="700" height="700">
+                                    <div class="destacado-texto">
+                                        <h3>Películas y Series</h3>
+                                        <span class="destacado-cta">Ver colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                    </div>
+                                </a>
+                            </article>
+                            <article class="destacado-card">
+                                <a href="retratos-personalizados.html">
+                                    <img src="https://i.pinimg.com/736x/b8/6b/fc/b86bfc8cbfa40c7afd9827fd2abfea9e.jpg" alt="Colección Retratos Personalizados" loading="lazy" width="700" height="700">
+                                    <div class="destacado-texto">
+                                        <h3>Retratos Personalizados</h3>
+                                        <span class="destacado-cta">Ver colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                    </div>
+
+                    <button class="carrusel-flecha carrusel-flecha-siguiente" type="button" aria-label="Colección siguiente">
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             PREGUNTAS FRECUENTES
+             (no estaba en la lista de 10 secciones del
+             brief; se conserva al final, antes del
+             footer, por su valor SEO vía FAQPage JSON-LD)
              ============================================= -->
         <section class="seccion-faq" id="faq">
             <div class="contenedor-seccion">
-                <h2 class="titulo-seccion">¿Tienes dudas?</h2>
-                <p class="subtitulo-seccion">Respuestas a las preguntas más comunes sobre nuestros cuadros</p>
+                <h2 class="titulo-seccion reveal">¿Tienes dudas?</h2>
+                <p class="subtitulo-seccion reveal">Respuestas a las preguntas más comunes sobre nuestros cuadros</p>
 
                 <div class="faq-grid">
                     <details class="faq-item">
@@ -630,7 +790,9 @@
     </main>
 
     <!-- =============================================
-         FOOTER
+         FOOTER (sin cambios, solo se actualizó el
+         enlace "Videos" → "Destacados" porque la
+         sección de videos ya no vive en el index)
          ============================================= -->
     <footer class="footer-principal" id="contacto">
         <div class="contenedor-footer">
@@ -648,7 +810,7 @@
                 <ul class="lista-enlaces">
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#categorias">Categorías</a></li>
-                    <li><a href="#videos">Videos</a></li>
+                    <li><a href="#destacados">Destacados</a></li>
                     <li><a href="#faq">Preguntas frecuentes</a></li>
                 </ul>
             </div>
@@ -675,11 +837,6 @@
         </div>
     </footer>
 
-    <!-- Un único script: antes había dos (prueba.js +
-         script/index.js) que enganchaban el mismo botón
-         del submenú dos veces. Ese doble-binding causaba
-         que el submenú se abriera y cerrara en el mismo
-         clic. Ahora solo carga este archivo. -->
     <script src="prueba.js" defer></script>
 </body>
 </html>

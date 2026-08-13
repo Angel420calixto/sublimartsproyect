@@ -10,10 +10,17 @@
 
 /* ================================================
    SISTEMA DE CARRUSELES UNIFICADO
-   Beneficios / Videos / Muro. Reutilizable: agrega
-   más <article class="carrusel-slide"> o
-   <div class="muro-item"> dentro de la pista y
-   seguirá funcionando sin tocar este archivo.
+   Categorías / Muro / Destacados. Reutilizable:
+   agrega más <a class="categoria-card">,
+   <div class="muro-item"> o <article class="destacado-card">
+   dentro de la pista y seguirá funcionando sin tocar
+   este archivo.
+
+   opciones admitidas:
+     - visiblesDesktop (> 1024px, default 6)
+     - visiblesTablet  (769–1024px, default 3)
+     - visiblesMobile  (<= 768px, default 1)
+     - gap             (separación en px, default 20)
    ================================================ */
 class Carrusel {
     constructor(contenedorId, pistaId, opciones = {}) {
@@ -27,7 +34,10 @@ class Carrusel {
         this.vista = this.contenedor.querySelector('.carrusel-vista');
 
         this.desplazamiento = 0;
-        this.slidesVisibles = opciones.slidesVisibles || 6;
+        this.visiblesDesktop = opciones.visiblesDesktop || 6;
+        this.visiblesTablet = opciones.visiblesTablet || 3;
+        this.visiblesMobile = opciones.visiblesMobile || 1;
+        this.slidesVisibles = this.visiblesDesktop;
         this.gap = opciones.gap || 20;
 
         this.touchInicio = 0;
@@ -61,11 +71,11 @@ class Carrusel {
         this.anchoSlide = this.slides[0].offsetWidth + this.gap;
 
         if (window.innerWidth <= 768) {
-            this.slidesVisibles = 1;
+            this.slidesVisibles = this.visiblesMobile;
         } else if (window.innerWidth <= 1024) {
-            this.slidesVisibles = 3;
+            this.slidesVisibles = this.visiblesTablet;
         } else {
-            this.slidesVisibles = 6;
+            this.slidesVisibles = this.visiblesDesktop;
         }
 
         this.anchoVista = this.vista.offsetWidth;
@@ -142,7 +152,94 @@ class Carrusel {
 }
 
 /* ================================================
-   CARRUSEL DE IMÁGENES — SECCIÓN INFO
+   HERO CARRUSEL — PORTADA (tipo Metaleks)
+   Fundido automático entre imágenes de fondo, el
+   texto/CTA se mantiene fijo. Se pausa en hover/foco
+   y respeta prefers-reduced-motion. Swipe en mobile.
+   ================================================ */
+class HeroCarrusel {
+    constructor(seccionId, pistaId, indicadoresId, opciones = {}) {
+        this.seccion = document.getElementById(seccionId);
+        this.pista = document.getElementById(pistaId);
+        this.indicadoresContenedor = document.getElementById(indicadoresId);
+        if (!this.seccion || !this.pista) return;
+
+        this.slides = Array.from(this.pista.querySelectorAll('.hero-slide'));
+        this.indicadores = this.indicadoresContenedor
+            ? Array.from(this.indicadoresContenedor.querySelectorAll('.hero-indicador'))
+            : [];
+        this.indice = 0;
+        this.intervalo = opciones.intervalo || 5500;
+        this.temporizador = null;
+        this.reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        this.init();
+    }
+
+    init() {
+        if (this.slides.length <= 1) return;
+
+        this.indicadores.forEach((ind, i) => {
+            ind.addEventListener('click', () => {
+                this.irSlide(i);
+                this.reiniciarAutoplay();
+            });
+        });
+
+        this.seccion.addEventListener('mouseenter', () => this.detenerAutoplay());
+        this.seccion.addEventListener('mouseleave', () => this.reiniciarAutoplay());
+        this.seccion.addEventListener('focusin', () => this.detenerAutoplay());
+        this.seccion.addEventListener('focusout', () => this.reiniciarAutoplay());
+
+        let inicioX = 0;
+        this.seccion.addEventListener('touchstart', (e) => {
+            inicioX = e.touches[0].clientX;
+            this.detenerAutoplay();
+        }, { passive: true });
+
+        this.seccion.addEventListener('touchend', (e) => {
+            const deltaX = e.changedTouches[0].clientX - inicioX;
+            if (deltaX < -50) this.navegar(1);
+            if (deltaX > 50) this.navegar(-1);
+            this.reiniciarAutoplay();
+        });
+
+        this.mostrarSlide(this.indice);
+
+        if (!this.reducirMovimiento) {
+            this.iniciarAutoplay();
+        }
+    }
+
+    navegar(dir) { this.irSlide(this.indice + dir); }
+
+    irSlide(nuevo) {
+        this.indice = (nuevo + this.slides.length) % this.slides.length;
+        this.mostrarSlide(this.indice);
+    }
+
+    mostrarSlide(i) {
+        this.slides.forEach((slide, idx) => slide.classList.toggle('activo', idx === i));
+        this.indicadores.forEach((ind, idx) => ind.classList.toggle('activo', idx === i));
+    }
+
+    iniciarAutoplay() {
+        this.temporizador = setInterval(() => this.navegar(1), this.intervalo);
+    }
+
+    detenerAutoplay() {
+        clearInterval(this.temporizador);
+    }
+
+    reiniciarAutoplay() {
+        this.detenerAutoplay();
+        if (!this.reducirMovimiento) this.iniciarAutoplay();
+    }
+}
+
+/* ================================================
+   CARRUSEL DE IMÁGENES — SECCIÓN "¿QUÉ ES UNA
+   IMPRESIÓN EN METAL?" (fade + indicadores)
    ================================================ */
 class CarruselInfo {
     constructor(id) {
@@ -309,12 +406,64 @@ class MenuMobile {
 }
 
 /* ================================================
+   ANIMACIONES AL ENTRAR EN VIEWPORT
+   Cualquier elemento con clase "reveal" recibe
+   "visible" la primera vez que entra en pantalla.
+   Respeta prefers-reduced-motion (ver CSS).
+   ================================================ */
+function initRevealAnimations() {
+    const elementos = document.querySelectorAll('.reveal');
+    if (elementos.length === 0) return;
+
+    if (!('IntersectionObserver' in window)) {
+        elementos.forEach((el) => el.classList.add('visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    elementos.forEach((el) => observer.observe(el));
+}
+
+/* ================================================
    INICIALIZACIÓN
    ================================================ */
 document.addEventListener('DOMContentLoaded', () => {
+    new HeroCarrusel('inicio', 'heroSlides', 'heroIndicadores', { intervalo: 5500 });
+
     new CarruselInfo('infoCarrusel');
-    new Carrusel('beneficiosCarrusel', 'beneficiosPista', { slidesVisibles: 6, gap: 20 });
-    new Carrusel('videosCarrusel', 'videosPista', { slidesVisibles: 6, gap: 20 });
-    new Carrusel('muroCarrusel', 'muroPista', { slidesVisibles: 3, gap: 20 });
+
+    // Categorías: "ventana" de 4 en desktop, 3 en
+    // tablet, swipe de a una en mobile.
+    new Carrusel('categoriasCarrusel', 'categoriasPista', {
+        visiblesDesktop: 4,
+        visiblesTablet: 3,
+        visiblesMobile: 1,
+        gap: 20
+    });
+
+    new Carrusel('muroCarrusel', 'muroPista', {
+        visiblesDesktop: 3,
+        visiblesTablet: 2,
+        visiblesMobile: 1,
+        gap: 20
+    });
+
+    new Carrusel('destacadosCarrusel', 'destacadosPista', {
+        visiblesDesktop: 4,
+        visiblesTablet: 3,
+        visiblesMobile: 1,
+        gap: 20
+    });
+
     new MenuMobile();
+
+    initRevealAnimations();
 });
