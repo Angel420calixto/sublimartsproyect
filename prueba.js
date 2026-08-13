@@ -1,26 +1,18 @@
 /* ================================================
    SublimArts — script/index.js
-   Único script del sitio (antes había dos scripts
-   cargados a la vez —"prueba.js" + "script/index.js"—
-   que enganchaban el mismo botón del submenú dos
-   veces: cada clic abría y cerraba el menú en el
-   mismo instante. Ese era el bug del submenú mobile.
-   Ahora solo existe ESTE archivo.)
+   Único script del sitio. Incluye:
+   - Sistema de carruseles con scroll-snap nativo
+   - Hero carrusel con autoplay cada 4s
+   - Carrusel de imágenes de la sección info
+   - Menú mobile
+   - Animaciones al entrar en viewport
    ================================================ */
 
 /* ================================================
-   SISTEMA DE CARRUSELES UNIFICADO
-   Categorías / Muro / Destacados. Reutilizable:
-   agrega más <a class="categoria-card">,
-   <div class="muro-item"> o <article class="destacado-card">
-   dentro de la pista y seguirá funcionando sin tocar
-   este archivo.
-
-   opciones admitidas:
-     - visiblesDesktop (> 1024px, default 6)
-     - visiblesTablet  (769–1024px, default 3)
-     - visiblesMobile  (<= 768px, default 1)
-     - gap             (separación en px, default 20)
+   SISTEMA DE CARRUSELES CON SCROLL-SNAP NATIVO
+   En mobile usa scroll-snap del navegador para
+   cambiar de a un elemento por swipe. En desktop
+   usa flechas para desplazar múltiples elementos.
    ================================================ */
 class Carrusel {
     constructor(contenedorId, pistaId, opciones = {}) {
@@ -28,23 +20,20 @@ class Carrusel {
         if (!this.contenedor) return;
 
         this.pista = document.getElementById(pistaId);
+        this.vista = this.contenedor.querySelector('.carrusel-vista');
         this.btnAnterior = this.contenedor.querySelector('.carrusel-flecha-anterior');
         this.btnSiguiente = this.contenedor.querySelector('.carrusel-flecha-siguiente');
         this.slides = Array.from(this.pista.children);
-        this.vista = this.contenedor.querySelector('.carrusel-vista');
 
-        this.desplazamiento = 0;
-        this.visiblesDesktop = opciones.visiblesDesktop || 6;
-        this.visiblesTablet = opciones.visiblesTablet || 3;
-        this.visiblesMobile = opciones.visiblesMobile || 1;
-        this.slidesVisibles = this.visiblesDesktop;
-        this.gap = opciones.gap || 20;
+        this.opciones = {
+            visiblesDesktop: opciones.visiblesDesktop || 4,
+            visiblesTablet: opciones.visiblesTablet || 3,
+            visiblesMobile: opciones.visiblesMobile || 1,
+            gap: opciones.gap || 20,
+            ...opciones
+        };
 
-        this.touchInicio = 0;
-        this.touchDelta = 0;
-        this.tracking = false;
-        this.startTransform = 0;
-
+        this.esMobile = window.innerWidth <= 768;
         this.init();
     }
 
@@ -53,109 +42,98 @@ class Carrusel {
 
         this.calcularDimensiones();
         this.bindEventos();
-        this.actualizarBotones();
 
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
+                this.esMobile = window.innerWidth <= 768;
                 this.calcularDimensiones();
-                this.desplazamiento = 0;
-                this.actualizarPista();
-                this.actualizarBotones();
+                if (this.btnAnterior) this.btnAnterior.disabled = true;
+                if (this.btnSiguiente) this.btnSiguiente.disabled = false;
             }, 250);
         });
     }
 
     calcularDimensiones() {
-        this.anchoSlide = this.slides[0].offsetWidth + this.gap;
-
-        if (window.innerWidth <= 768) {
-            this.slidesVisibles = this.visiblesMobile;
-        } else if (window.innerWidth <= 1024) {
-            this.slidesVisibles = this.visiblesTablet;
+        // En mobile, cada slide ocupa el 100% del ancho de la vista
+        if (this.esMobile) {
+            this.anchoSlide = this.vista.offsetWidth;
+            this.slides.forEach(slide => {
+                slide.style.width = '100%';
+            });
         } else {
-            this.slidesVisibles = this.visiblesDesktop;
+            // En desktop, los slides se distribuyen según visiblesDesktop
+            const gap = this.opciones.gap;
+            const visibles = window.innerWidth <= 1024 ? this.opciones.visiblesTablet : this.opciones.visiblesDesktop;
+            const anchoDisponible = this.vista.offsetWidth;
+            const anchoSlide = (anchoDisponible - (gap * (visibles - 1))) / visibles;
+            
+            this.anchoSlide = anchoSlide;
+            this.slides.forEach(slide => {
+                slide.style.width = `${anchoSlide}px`;
+            });
         }
-
-        this.anchoVista = this.vista.offsetWidth;
-        this.maxDesplazamiento = Math.max(0, (this.slides.length * this.anchoSlide) - this.anchoVista);
     }
 
     bindEventos() {
-        if (this.btnAnterior) this.btnAnterior.addEventListener('click', () => this.mover(-1));
-        if (this.btnSiguiente) this.btnSiguiente.addEventListener('click', () => this.mover(1));
+        if (this.btnAnterior) {
+            this.btnAnterior.addEventListener('click', () => this.desplazar(-1));
+        }
+        if (this.btnSiguiente) {
+            this.btnSiguiente.addEventListener('click', () => this.desplazar(1));
+        }
 
-        this.pista.addEventListener('touchstart', (e) => {
-            this.touchInicio = e.touches[0].clientX;
-            this.tracking = true;
-            this.startTransform = this.desplazamiento;
-            this.pista.style.transition = 'none';
+        // Scroll snap ya está activo via CSS en mobile
+        // En desktop, actualizamos los botones al hacer scroll
+        this.vista.addEventListener('scroll', () => {
+            if (!this.esMobile) {
+                this.actualizarBotones();
+            }
         }, { passive: true });
 
-        this.pista.addEventListener('touchmove', (e) => {
-            if (!this.tracking) return;
-            this.touchDelta = e.touches[0].clientX - this.touchInicio;
-
-            if (Math.abs(this.touchDelta) > 10) {
-                e.preventDefault();
-            }
-
-            const nuevo = this.startTransform - this.touchDelta;
-            const limitado = Math.max(0, Math.min(nuevo, this.maxDesplazamiento));
-            this.pista.style.transform = `translateX(${-limitado}px)`;
-        }, { passive: false });
-
-        this.pista.addEventListener('touchend', () => {
-            if (!this.tracking) return;
-            this.tracking = false;
-            this.pista.style.transition = 'transform 0.5s ease';
-
-            this.desplazamiento = this.startTransform - this.touchDelta;
-
-            const umbral = 50;
-            if (this.touchDelta < -umbral) {
-                this.mover(1);
-            } else if (this.touchDelta > umbral) {
-                this.mover(-1);
-            } else {
-                this.desplazamiento = this.startTransform;
-                this.actualizarPista();
-            }
-
-            this.touchDelta = 0;
-            this.actualizarBotones();
-        });
-
+        // Navegación por teclado
         this.contenedor.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') { e.preventDefault(); this.mover(-1); }
-            else if (e.key === 'ArrowRight') { e.preventDefault(); this.mover(1); }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                this.desplazar(-1);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                this.desplazar(1);
+            }
         });
-    }
 
-    mover(direccion) {
-        const paso = this.anchoSlide * this.slidesVisibles;
-        this.desplazamiento += direccion * paso;
-        this.desplazamiento = Math.max(0, Math.min(this.desplazamiento, this.maxDesplazamiento));
-        this.actualizarPista();
         this.actualizarBotones();
     }
 
-    actualizarPista() {
-        this.pista.style.transform = `translateX(${-this.desplazamiento}px)`;
+    desplazar(direccion) {
+        const paso = this.anchoSlide;
+        const scrollActual = this.vista.scrollLeft;
+        const nuevoScroll = scrollActual + (direccion * paso);
+        
+        this.vista.scrollTo({
+            left: nuevoScroll,
+            behavior: 'smooth'
+        });
     }
 
     actualizarBotones() {
-        if (this.btnAnterior) this.btnAnterior.disabled = this.desplazamiento <= 0;
-        if (this.btnSiguiente) this.btnSiguiente.disabled = this.desplazamiento >= this.maxDesplazamiento;
+        if (!this.btnAnterior || !this.btnSiguiente) return;
+        
+        const scrollActual = this.vista.scrollLeft;
+        const anchoTotal = this.pista.scrollWidth;
+        const anchoVista = this.vista.clientWidth;
+        
+        this.btnAnterior.disabled = scrollActual <= 0;
+        this.btnSiguiente.disabled = scrollActual >= (anchoTotal - anchoVista - 10);
     }
 }
 
 /* ================================================
-   HERO CARRUSEL — PORTADA (tipo Metaleks)
-   Fundido automático entre imágenes de fondo, el
-   texto/CTA se mantiene fijo. Se pausa en hover/foco
-   y respeta prefers-reduced-motion. Swipe en mobile.
+   HERO CARRUSEL — PORTADA
+   Fundido automático entre imágenes cada 4s.
+   Swipe en mobile para cambiar de imagen.
+   Pausa en hover/foco.
    ================================================ */
 class HeroCarrusel {
     constructor(seccionId, pistaId, indicadoresId, opciones = {}) {
@@ -169,9 +147,14 @@ class HeroCarrusel {
             ? Array.from(this.indicadoresContenedor.querySelectorAll('.hero-indicador'))
             : [];
         this.indice = 0;
-        this.intervalo = opciones.intervalo || 5500;
+        this.intervalo = opciones.intervalo || 4000; // 4 segundos
         this.temporizador = null;
         this.reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.touchInicioX = 0;
+        this.touchInicioY = 0;
+        this.touchDeltaX = 0;
+        this.touchDeltaY = 0;
+        this.tracking = false;
 
         this.init();
     }
@@ -191,16 +174,41 @@ class HeroCarrusel {
         this.seccion.addEventListener('focusin', () => this.detenerAutoplay());
         this.seccion.addEventListener('focusout', () => this.reiniciarAutoplay());
 
-        let inicioX = 0;
+        // Soporte táctil con detección de swipe horizontal
         this.seccion.addEventListener('touchstart', (e) => {
-            inicioX = e.touches[0].clientX;
+            this.touchInicioX = e.touches[0].clientX;
+            this.touchInicioY = e.touches[0].clientY;
+            this.touchDeltaX = 0;
+            this.touchDeltaY = 0;
+            this.tracking = true;
             this.detenerAutoplay();
         }, { passive: true });
 
-        this.seccion.addEventListener('touchend', (e) => {
-            const deltaX = e.changedTouches[0].clientX - inicioX;
-            if (deltaX < -50) this.navegar(1);
-            if (deltaX > 50) this.navegar(-1);
+        this.seccion.addEventListener('touchmove', (e) => {
+            if (!this.tracking) return;
+            
+            this.touchDeltaX = e.touches[0].clientX - this.touchInicioX;
+            this.touchDeltaY = e.touches[0].clientY - this.touchInicioY;
+            
+            // Si es swipe horizontal, prevenimos el scroll vertical
+            if (Math.abs(this.touchDeltaX) > Math.abs(this.touchDeltaY)) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        this.seccion.addEventListener('touchend', () => {
+            if (!this.tracking) return;
+            this.tracking = false;
+
+            const umbral = 50;
+            if (this.touchDeltaX < -umbral) {
+                this.navegar(1);
+            } else if (this.touchDeltaX > umbral) {
+                this.navegar(-1);
+            }
+
+            this.touchDeltaX = 0;
+            this.touchDeltaY = 0;
             this.reiniciarAutoplay();
         });
 
@@ -211,7 +219,9 @@ class HeroCarrusel {
         }
     }
 
-    navegar(dir) { this.irSlide(this.indice + dir); }
+    navegar(dir) {
+        this.irSlide(this.indice + dir);
+    }
 
     irSlide(nuevo) {
         this.indice = (nuevo + this.slides.length) % this.slides.length;
@@ -219,8 +229,12 @@ class HeroCarrusel {
     }
 
     mostrarSlide(i) {
-        this.slides.forEach((slide, idx) => slide.classList.toggle('activo', idx === i));
-        this.indicadores.forEach((ind, idx) => ind.classList.toggle('activo', idx === i));
+        this.slides.forEach((slide, idx) => {
+            slide.classList.toggle('activo', idx === i);
+        });
+        this.indicadores.forEach((ind, idx) => {
+            ind.classList.toggle('activo', idx === i);
+        });
     }
 
     iniciarAutoplay() {
@@ -233,13 +247,17 @@ class HeroCarrusel {
 
     reiniciarAutoplay() {
         this.detenerAutoplay();
-        if (!this.reducirMovimiento) this.iniciarAutoplay();
+        if (!this.reducirMovimiento) {
+            this.iniciarAutoplay();
+        }
     }
 }
 
 /* ================================================
    CARRUSEL DE IMÁGENES — SECCIÓN "¿QUÉ ES UNA
-   IMPRESIÓN EN METAL?" (fade + indicadores)
+   IMPRESIÓN EN METAL?"
+   Carrusel con fade + indicadores + flechas.
+   Soporte para swipe en mobile.
    ================================================ */
 class CarruselInfo {
     constructor(id) {
@@ -251,6 +269,8 @@ class CarruselInfo {
         this.btnAnterior = this.carrusel.querySelector('.info-carrusel-flecha.anterior');
         this.btnSiguiente = this.carrusel.querySelector('.info-carrusel-flecha.siguiente');
         this.indice = 0;
+        this.touchInicioX = 0;
+        this.touchDeltaX = 0;
 
         this.init();
     }
@@ -258,33 +278,58 @@ class CarruselInfo {
     init() {
         if (this.slides.length === 0) return;
 
-        if (this.btnAnterior) this.btnAnterior.addEventListener('click', () => this.navegar(-1));
-        if (this.btnSiguiente) this.btnSiguiente.addEventListener('click', () => this.navegar(1));
+        if (this.btnAnterior) {
+            this.btnAnterior.addEventListener('click', () => this.navegar(-1));
+        }
+        if (this.btnSiguiente) {
+            this.btnSiguiente.addEventListener('click', () => this.navegar(1));
+        }
 
         this.indicadores.forEach((ind, i) => {
             ind.addEventListener('click', () => this.irSlide(i));
         });
 
+        // Navegación por teclado
         this.carrusel.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') { e.preventDefault(); this.navegar(-1); }
-            if (e.key === 'ArrowRight') { e.preventDefault(); this.navegar(1); }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                this.navegar(-1);
+            }
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                this.navegar(1);
+            }
         });
 
-        let inicioX = 0;
+        // Soporte táctil para mobile
         this.carrusel.addEventListener('touchstart', (e) => {
-            inicioX = e.touches[0].clientX;
+            this.touchInicioX = e.touches[0].clientX;
+            this.touchDeltaX = 0;
         }, { passive: true });
 
-        this.carrusel.addEventListener('touchend', (e) => {
-            const deltaX = e.changedTouches[0].clientX - inicioX;
-            if (deltaX < -50) this.navegar(1);
-            if (deltaX > 50) this.navegar(-1);
+        this.carrusel.addEventListener('touchmove', (e) => {
+            this.touchDeltaX = e.touches[0].clientX - this.touchInicioX;
+            if (Math.abs(this.touchDeltaX) > 10) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        this.carrusel.addEventListener('touchend', () => {
+            const umbral = 50;
+            if (this.touchDeltaX < -umbral) {
+                this.navegar(1);
+            } else if (this.touchDeltaX > umbral) {
+                this.navegar(-1);
+            }
+            this.touchDeltaX = 0;
         });
 
         this.mostrarSlide(this.indice);
     }
 
-    navegar(dir) { this.irSlide(this.indice + dir); }
+    navegar(dir) {
+        this.irSlide(this.indice + dir);
+    }
 
     irSlide(nuevo) {
         this.indice = (nuevo + this.slides.length) % this.slides.length;
@@ -292,13 +337,18 @@ class CarruselInfo {
     }
 
     mostrarSlide(i) {
-        this.slides.forEach((slide, idx) => slide.classList.toggle('activo', idx === i));
-        this.indicadores.forEach((ind, idx) => ind.classList.toggle('activo', idx === i));
+        this.slides.forEach((slide, idx) => {
+            slide.classList.toggle('activo', idx === i);
+        });
+        this.indicadores.forEach((ind, idx) => {
+            ind.classList.toggle('activo', idx === i);
+        });
     }
 }
 
 /* ================================================
-   MENÚ MOBILE (hamburguesa + submenú acordeón)
+   MENÚ MOBILE
+   Hamburguesa + submenú acordeón
    ================================================ */
 class MenuMobile {
     constructor() {
@@ -324,11 +374,13 @@ class MenuMobile {
             this.cerrarMenu();
         });
 
+        // Manejo del submenú
         const botonesSubmenu = document.querySelectorAll('.enlace-menu-desplegable');
         botonesSubmenu.forEach((btn) => {
             btn.addEventListener('click', (e) => this.handleSubmenuClick(e, btn));
         });
 
+        // Cerrar menú al hacer click en enlaces
         const enlacesMenu = document.querySelectorAll('.enlace-menu, .submenu a');
         enlacesMenu.forEach((link) => {
             link.addEventListener('click', () => {
@@ -338,6 +390,7 @@ class MenuMobile {
             });
         });
 
+        // Cerrar con Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.estaAbierto) {
                 this.cerrarMenu();
@@ -345,8 +398,7 @@ class MenuMobile {
             }
         });
 
-        // Si la ventana pasa a tamaño desktop con el menú abierto,
-        // lo reseteamos para evitar estados inconsistentes.
+        // Reset al cambiar a desktop
         window.addEventListener('resize', () => {
             if (window.innerWidth > 768 && this.estaAbierto) {
                 this.cerrarMenu();
@@ -355,7 +407,7 @@ class MenuMobile {
     }
 
     handleSubmenuClick(e, btn) {
-        if (window.innerWidth > 768) return; // en desktop el submenú abre por :hover (CSS)
+        if (window.innerWidth > 768) return;
 
         e.preventDefault();
         e.stopPropagation();
@@ -363,6 +415,7 @@ class MenuMobile {
         const padre = btn.closest('.menu-con-desplegable');
         if (!padre) return;
 
+        // Cerrar otros submenús
         document.querySelectorAll('.menu-con-desplegable.activo').forEach((item) => {
             if (item !== padre) {
                 item.classList.remove('activo');
@@ -371,6 +424,7 @@ class MenuMobile {
             }
         });
 
+        // Toggle del submenú actual
         const estaActivo = padre.classList.contains('activo');
         padre.classList.toggle('activo', !estaActivo);
         btn.setAttribute('aria-expanded', String(!estaActivo));
@@ -397,6 +451,7 @@ class MenuMobile {
         this.boton.setAttribute('aria-expanded', 'false');
         this.boton.setAttribute('aria-label', 'Abrir menú');
 
+        // Cerrar submenús abiertos
         document.querySelectorAll('.menu-con-desplegable.activo').forEach((item) => {
             item.classList.remove('activo');
             const btn = item.querySelector('.enlace-menu-desplegable');
@@ -407,9 +462,6 @@ class MenuMobile {
 
 /* ================================================
    ANIMACIONES AL ENTRAR EN VIEWPORT
-   Cualquier elemento con clase "reveal" recibe
-   "visible" la primera vez que entra en pantalla.
-   Respeta prefers-reduced-motion (ver CSS).
    ================================================ */
 function initRevealAnimations() {
     const elementos = document.querySelectorAll('.reveal');
@@ -427,21 +479,52 @@ function initRevealAnimations() {
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+    });
 
     elementos.forEach((el) => observer.observe(el));
+}
+
+/* ================================================
+   NAVEGACIÓN SUAVE PARA ENLACES INTERNOS
+   ================================================ */
+function initNavegacionSuave() {
+    document.querySelectorAll('a[href^="#"]').forEach((enlace) => {
+        enlace.addEventListener('click', (evento) => {
+            const targetId = enlace.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                evento.preventDefault();
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
 }
 
 /* ================================================
    INICIALIZACIÓN
    ================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-    new HeroCarrusel('inicio', 'heroSlides', 'heroIndicadores', { intervalo: 5500 });
+    // Hero carrusel con autoplay cada 4 segundos
+    new HeroCarrusel('inicio', 'heroSlides', 'heroIndicadores', {
+        intervalo: 4000
+    });
 
+    // Carrusel de imágenes de la sección info
     new CarruselInfo('infoCarrusel');
 
-    // Categorías: "ventana" de 4 en desktop, 3 en
-    // tablet, swipe de a una en mobile.
+    // Carruseles horizontales con scroll-snap
     new Carrusel('categoriasCarrusel', 'categoriasPista', {
         visiblesDesktop: 4,
         visiblesTablet: 3,
@@ -463,7 +546,14 @@ document.addEventListener('DOMContentLoaded', () => {
         gap: 20
     });
 
+    // Menú mobile
     new MenuMobile();
 
+    // Animaciones de reveal
     initRevealAnimations();
+
+    // Navegación suave
+    initNavegacionSuave();
+
+    console.log('SublimArts - Index cargado correctamente');
 });

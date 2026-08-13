@@ -1,7 +1,5 @@
 /* =============================================
    VARIABLES CSS GLOBALES
-   (idénticas a las actuales — identidad visual
-   de SublimArts sin modificar)
    ============================================= */
 :root {
     --color-primario: #1a1a2e;
@@ -23,8 +21,6 @@
 
 /* =============================================
    RESET Y BASE
-   overflow-x: clip evita crear scroll containers
-   que rompen position: sticky
    ============================================= */
 * {
     margin: 0;
@@ -34,7 +30,7 @@
 
 html {
     scroll-behavior: smooth;
-    overflow-x: clip;
+    overflow-x: hidden;
     width: 100%;
 }
 
@@ -43,9 +39,10 @@ body {
     background-color: var(--color-fondo);
     color: var(--color-texto);
     line-height: 1.5;
-    overflow-x: clip;
+    overflow-x: hidden;
     overflow-y: visible;
     width: 100%;
+    position: relative;
 }
 
 body.menu-abierto {
@@ -179,8 +176,6 @@ iframe {
 
 /* =============================================
    ANIMACIONES AL ENTRAR EN VIEWPORT
-   Controladas por IntersectionObserver en JS.
-   Los elementos parten ocultos y suben con fade.
    ============================================= */
 .reveal {
     opacity: 0;
@@ -227,16 +222,13 @@ iframe {
     align-items: center;
     gap: 10px;
 }
-.logo {
+.logo-imagen {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-destacado), #ff7b9c);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
+    object-fit: cover;
     flex-shrink: 0;
+    background: linear-gradient(135deg, var(--color-destacado), #ff7b9c);
 }
 .titulo-logo {
     font-size: 1.5rem;
@@ -404,14 +396,11 @@ iframe {
 
 /* =============================================
    1. BANNER PRINCIPAL / HERO — CARRUSEL
-   Varias imágenes de fondo en fundido continuo
-   (autoplay), texto y CTA fijos encima. Desktop:
-   texto a la izquierda. Mobile: texto centrado.
    ============================================= */
 .banner-principal {
     position: relative;
     background-color: #000;
-    height: clamp(200px, 55vw, 320px);
+    height: clamp(300px, 55vw, 450px);
     overflow: hidden;
 }
 .hero-slides {
@@ -469,6 +458,36 @@ iframe {
     border-color: var(--color-destacado);
 }
 
+/* Botón con texto separado */
+.boton-banner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--color-destacado);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: var(--transicion-rapida);
+    position: relative;
+    z-index: 3;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+.boton-texto {
+    display: inline-block;
+    white-space: nowrap;
+}
+.boton-banner:hover {
+    background-color: #ff5773;
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-destacada);
+}
+
 @media (min-width: 769px) {
     .banner-principal {
         height: clamp(320px, 34vw, 460px);
@@ -508,70 +527,86 @@ iframe {
     }
 }
 
+/* Mobile: hero optimizado */
 @media (max-width: 768px) {
     .banner-principal {
-        height: auto;
-        min-height: 380px;
+        height: 100svh;
+        min-height: 500px;
+        max-height: 700px;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .hero-slides,
+    .hero-slide,
+    .banner-imagen {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .banner-imagen {
+        object-fit: cover;
+        object-position: center;
     }
     .banner-overlay {
         background: linear-gradient(
             180deg,
-            rgba(13, 13, 26, 0.75) 0%,
-            rgba(13, 13, 26, 0.5) 50%,
+            rgba(13, 13, 26, 0.85) 0%,
+            rgba(13, 13, 26, 0.2) 30%,
+            rgba(13, 13, 26, 0.2) 60%,
             rgba(13, 13, 26, 0.85) 100%
         );
     }
     .banner-contenido {
         position: relative;
         z-index: 2;
-        padding: 2rem 20px;
-        text-align: center;
         width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 80px 20px 100px;
     }
     .contenido-banner {
-        max-width: 500px;
-        margin: 0 auto;
+        max-width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        width: 100%;
     }
     .titulo-banner {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         color: #fff;
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        margin-bottom: 0.5rem;
+        padding-top: 20px;
     }
     .texto-banner {
         color: rgba(255, 255, 255, 0.9);
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.5;
     }
-}
-
-.boton-banner {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background-color: var(--color-destacado);
-    color: white;
-    padding: 0.8rem 2rem;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: var(--transicion-rapida);
-    position: relative;
-    z-index: 3;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-}
-.boton-banner:hover {
-    background-color: #ff5773;
-    transform: translateY(-3px);
-    box-shadow: var(--sombra-destacada);
+    .boton-banner {
+        margin-top: auto;
+        align-self: center;
+        margin-bottom: 0;
+        padding: 0.8rem 1.8rem;
+        font-size: 0.95rem;
+        gap: 8px;
+    }
+    .hero-indicadores {
+        bottom: 85px;
+    }
 }
 
 /* =============================================
    2. ¿QUÉ ES UNA IMPRESIÓN EN METAL?
-   (antes "seccion-info": mismo layout de imagen +
-   texto, mismo carrusel de imágenes CarruselInfo)
+   (Imágenes con object-fit: contain - completas)
    ============================================= */
 .seccion-que-es {
     padding: 80px 0;
@@ -613,7 +648,7 @@ iframe {
     font-size: 1.2rem;
 }
 
-/* Carrusel de imágenes (fade + indicadores) */
+/* Carrusel de imágenes - contain para ver completas */
 .info-carrusel {
     position: relative;
     flex: 1;
@@ -651,6 +686,7 @@ iframe {
     height: 100%;
     min-height: 400px;
     object-fit: contain;
+    object-position: center;
 }
 .info-carrusel-flecha {
     position: absolute;
@@ -707,33 +743,8 @@ iframe {
 }
 
 /* =============================================
-   IMÁGENES — COMPARACIÓN Y CALIDAD
-   Los src apuntan a nombres "REEMPLAZAR-*.jpg":
-   solo hay que sustituir el archivo/ruta, el
-   estilo (tamaño, bordes, encuadre) ya está listo.
-   ============================================= */
-.comparacion-imagen {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 1px solid rgba(233, 69, 96, 0.15);
-}
-.comparacion-imagen-destacada {
-    border-color: var(--color-destacado);
-}
-.calidad-foto {
-    width: 100%;
-    height: 380px;
-    object-fit: cover;
-    border-radius: 16px;
-    border: 1px solid rgba(233, 69, 96, 0.15);
-}
-
-/* =============================================
    3. HD VS TRADICIONAL
-   Desktop: dos columnas + "VS" central.
-   Mobile: scroll-snap horizontal sin flechas.
+   (Imágenes con object-fit: contain - completas)
    ============================================= */
 .seccion-comparacion {
     padding: 80px 0;
@@ -755,6 +766,7 @@ iframe {
 .comparacion-columna h3 {
     margin: 18px 0 14px;
     font-size: 1.3rem;
+    text-align: center;
 }
 .comparacion-destacada {
     border-color: var(--color-destacado);
@@ -773,6 +785,10 @@ iframe {
     align-items: center;
     justify-content: center;
 }
+.comparacion-lista {
+    list-style: none;
+    padding: 0;
+}
 .comparacion-lista li {
     display: flex;
     align-items: flex-start;
@@ -780,17 +796,32 @@ iframe {
     margin-bottom: 10px;
     color: var(--color-texto-secundario);
     line-height: 1.4;
+    font-size: 0.95rem;
 }
 .comparacion-lista li i {
     margin-top: 4px;
     color: #6b6b8a;
+    flex-shrink: 0;
 }
 .comparacion-lista-check li i {
     color: var(--color-destacado);
 }
+.comparacion-imagen {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 12px;
+    border: 1px solid rgba(233, 69, 96, 0.15);
+    background: rgba(0, 0, 0, 0.3);
+}
+.comparacion-imagen-destacada {
+    border-color: var(--color-destacado);
+}
 
 /* =============================================
    4. CALIDAD SUBLIMARTS
+   (Imágenes con object-fit: contain - completas)
    ============================================= */
 .seccion-calidad {
     padding: 80px 0;
@@ -805,6 +836,15 @@ iframe {
 .calidad-imagen {
     flex: 1;
     min-width: 300px;
+}
+.calidad-foto {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 16px;
+    border: 1px solid rgba(233, 69, 96, 0.15);
+    background: rgba(0, 0, 0, 0.3);
 }
 .calidad-contenido {
     flex: 1;
@@ -847,7 +887,6 @@ iframe {
 
 /* =============================================
    5. PROCESO — 3 PASOS
-   Desktop: fila con conectores. Mobile: swipe.
    ============================================= */
 .seccion-proceso {
     padding: 80px 0;
@@ -899,7 +938,7 @@ iframe {
 
 /* =============================================
    6. PERSONALIZA TU CUADRO
-   Tarjetas con imagen real. Mobile: swipe.
+   (Imágenes con object-fit: contain - completas)
    ============================================= */
 .seccion-personaliza {
     padding: 80px 0;
@@ -919,12 +958,15 @@ iframe {
 }
 .personaliza-card {
     flex: 0 0 calc((100% - 60px) / 4);
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     position: relative;
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(233, 69, 96, 0.12);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    color: var(--color-texto);
+    background: rgba(20, 15, 45, 0.4);
 }
 .personaliza-card:hover {
     transform: translateY(-8px);
@@ -933,8 +975,10 @@ iframe {
 }
 .personaliza-card img {
     width: 100%;
-    height: 260px;
-    object-fit: cover;
+    height: 300px;
+    object-fit: contain;
+    object-position: center;
+    background: rgba(0, 0, 0, 0.3);
 }
 .personaliza-texto {
     padding: 16px;
@@ -956,11 +1000,8 @@ iframe {
 }
 
 /* =============================================
-   7. CATEGORÍAS — CARRUSEL "VENTANA"
-   Reutiliza el sistema unificado de carruseles
-   (.carrusel-contenedor / .carrusel-vista /
-   .carrusel-pista / .carrusel-flecha) que ya
-   usan Muro y Destacados.
+   7. CATEGORÍAS — CARRUSEL
+   (Imágenes con object-fit: contain - completas)
    ============================================= */
 .seccion-categorias {
     padding: 80px 0;
@@ -988,7 +1029,6 @@ iframe {
 .categoria-imagen {
     width: 100%;
     height: 280px;
-    padding: 12px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -1015,7 +1055,7 @@ iframe {
 }
 
 /* =============================================
-   CARRUSELES UNIFICADOS (Categorías / Muro / Destacados)
+   CARRUSELES UNIFICADOS
    ============================================= */
 .carrusel-contenedor {
     position: relative;
@@ -1032,7 +1072,15 @@ iframe {
     will-change: transform;
 }
 
-/* Muro items */
+/* =============================================
+   8. UN CUADRO EN TU MURO
+   (Imágenes con object-fit: fill - llenan TODO)
+   ============================================= */
+.seccion-muro {
+    padding: 80px 0;
+    background: #000000;
+}
+
 .muro-item {
     flex-shrink: 0;
     width: calc((100% - 40px) / 3);
@@ -1042,17 +1090,25 @@ iframe {
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(233, 69, 96, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    height: 450px;
 }
+
 .muro-item:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(233, 69, 96, 0.25);
     border-color: var(--color-destacado);
 }
+
+/* SOLO esta sección usa object-fit: fill */
 .muro-item img {
     width: 100%;
-    height: 450px;
-    object-fit: cover;
+    height: 100%;
+    object-fit: fill;
+    object-position: center;
+    display: block;
 }
+
 .muro-overlay {
     position: absolute;
     bottom: 0;
@@ -1062,6 +1118,7 @@ iframe {
     padding: 30px 20px 20px;
     text-align: center;
 }
+
 .muro-overlay p {
     color: white;
     font-weight: 600;
@@ -1113,15 +1170,8 @@ iframe {
 }
 
 /* =============================================
-   8. UN CUADRO EN TU MURO
-   ============================================= */
-.seccion-muro {
-    padding: 80px 0;
-    background: #000000;
-}
-
-/* =============================================
    9. COLECCIONES / PRODUCTOS DESTACADOS
+   (Imágenes con object-fit: contain - completas)
    ============================================= */
 .seccion-destacados {
     padding: 80px 0;
@@ -1147,8 +1197,10 @@ iframe {
 }
 .destacado-card img {
     width: 100%;
-    height: 220px;
-    object-fit: cover;
+    height: 250px;
+    object-fit: contain;
+    object-position: center;
+    background: rgba(0, 0, 0, 0.3);
 }
 .destacado-texto {
     padding: 16px;
@@ -1344,6 +1396,7 @@ button:focus-visible {
 @media (min-width: 769px) and (max-width: 1024px) {
     .muro-item {
         width: calc((100% - 20px) / 2);
+        height: 400px;
     }
     .categoria-card {
         width: calc((100% - 40px) / 3);
@@ -1373,7 +1426,7 @@ button:focus-visible {
     }
 }
 
-/* Mobile: max-width 768px */
+/* Mobile: max-width 768px - OPTIMIZADO */
 @media (max-width: 768px) {
     .boton-menu-mobile {
         display: flex;
@@ -1453,105 +1506,202 @@ button:focus-visible {
         color: var(--color-texto);
     }
 
+    /* Contenedor de sección sin padding lateral en mobile */
+    .contenedor-seccion {
+        padding: 0;
+        width: 100%;
+    }
+    .titulo-seccion {
+        font-size: 1.6rem;
+        padding: 0 20px;
+    }
+    .subtitulo-seccion {
+        font-size: 1rem;
+        padding: 0 20px;
+        margin-bottom: 2rem;
+    }
+
     /* ¿Qué es una impresión en metal? */
     .info-grid {
         flex-direction: column;
+        gap: 30px;
+    }
+    .info-contenido {
+        padding: 0 20px;
     }
     .info-carrusel,
     .info-carrusel-pista,
     .info-slide img {
-        min-height: 280px;
+        min-height: 300px;
+    }
+    .info-carrusel {
+        border-radius: 0;
     }
 
-    /* Comparación HD vs tradicional: scroll-snap, sin flechas */
+    /* Comparación HD vs tradicional */
     .comparacion-pista {
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        gap: 16px;
+        gap: 0;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        padding: 0;
+        margin: 0;
     }
     .comparacion-pista::-webkit-scrollbar {
         display: none;
     }
     .comparacion-columna,
     .comparacion-destacada {
-        flex: 0 0 85%;
-        scroll-snap-align: start;
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(233, 69, 96, 0.2);
     }
     .comparacion-vs {
         display: none;
+    }
+    .comparacion-imagen {
+        height: 250px;
     }
 
     /* Calidad SublimArts */
     .calidad-grid {
         flex-direction: column;
+        gap: 30px;
+    }
+    .calidad-imagen {
+        padding: 0;
+        width: 100%;
+    }
+    .calidad-foto {
+        border-radius: 0;
+        height: 300px;
+    }
+    .calidad-contenido {
+        padding: 0 20px;
     }
     .calidad-caracteristicas {
         grid-template-columns: 1fr;
     }
 
-    /* Proceso: scroll-snap horizontal, sin conectores */
+    /* Proceso */
     .proceso-pista {
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         justify-content: flex-start;
-        gap: 16px;
+        gap: 0;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        padding: 0;
+        margin: 0;
     }
     .proceso-pista::-webkit-scrollbar {
         display: none;
     }
     .paso-item {
-        flex: 0 0 82%;
-        scroll-snap-align: start;
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
         max-width: none;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(233, 69, 96, 0.2);
     }
     .paso-conector {
         display: none;
     }
 
     /* Personaliza tu cuadro */
+    .personaliza-pista {
+        gap: 0;
+        padding: 0;
+        margin: 0;
+    }
     .personaliza-card {
-        flex: 0 0 78%;
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+    }
+    .personaliza-card img {
+        height: 280px;
+    }
+    .personaliza-cta {
+        padding: 0 20px;
+    }
+    .personaliza-cta .boton-banner {
+        width: 100%;
+        max-width: 400px;
     }
 
-    /* Categorías / Destacados / Muro en carrusel */
+    /* Categorías / Destacados / Muro */
+    .carrusel-contenedor {
+        margin-top: 20px;
+    }
+    .carrusel-vista {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    .carrusel-vista::-webkit-scrollbar {
+        display: none;
+    }
+    .carrusel-pista {
+        gap: 0;
+        padding: 0;
+    }
     .categoria-card,
     .destacado-card {
-        width: 85%;
+        width: 100%;
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+    }
+    .categoria-imagen {
+        height: 300px;
     }
     .muro-item {
-        width: 90%;
+        width: 100%;
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+        height: 400px;
     }
-    .muro-item img {
-        height: 350px;
+    .destacado-card img {
+        height: 250px;
     }
 
-    /* Flechas de los carruseles: visibles y táctiles en mobile */
+    /* Flechas ocultas en mobile */
     .carrusel-flecha {
-        display: flex;
-        width: 42px;
-        height: 42px;
-        z-index: 20;
+        display: none;
     }
-    .carrusel-flecha-anterior {
-        left: 6px;
-    }
-    .carrusel-flecha-siguiente {
-        right: 6px;
-    }
-    .carrusel-flecha:active {
-        transform: translateY(-50%) scale(0.92);
+
+    /* FAQ */
+    .faq-grid {
+        padding: 0 20px;
     }
 
     /* Footer */
     .contenedor-footer {
         grid-template-columns: 1fr;
         gap: 2rem;
+        padding: 0 20px;
     }
 }
 
@@ -1565,30 +1715,34 @@ button:focus-visible {
         font-size: 24px;
     }
     .titulo-seccion {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
     .boton-banner {
         font-size: 0.9rem;
         padding: 0.7rem 1.5rem;
     }
-    .categoria-card,
-    .destacado-card {
-        width: 92%;
+    .titulo-banner {
+        font-size: 1.4rem;
+    }
+    .texto-banner {
+        font-size: 0.85rem;
+    }
+    .categoria-imagen {
+        height: 250px;
     }
     .muro-item {
-        width: 95%;
+        height: 350px;
     }
-    .muro-item img {
-        height: 300px;
+    .destacado-card img {
+        height: 220px;
     }
-    .personaliza-card {
-        flex: 0 0 88%;
+    .personaliza-card img {
+        height: 250px;
     }
-    .paso-item {
-        flex: 0 0 90%;
+    .comparacion-imagen {
+        height: 220px;
     }
-    .comparacion-columna,
-    .comparacion-destacada {
-        flex: 0 0 92%;
+    .calidad-foto {
+        height: 250px;
     }
 }
